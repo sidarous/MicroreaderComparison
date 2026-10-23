@@ -48,7 +48,7 @@ A few notes on availability:
 - **Xteink X3:** some AliExpress units ship with USB flashing locked.
 - **Boox Picco:** $99.99 in Hong Kong, shipping late October to November.
 - **EEGO A4 and A4 Lite:** Chinese-only stock firmware, with publicly reported quality-control issues. Earlier China listings were about RMB 239 (~$35).
-- **M5Stack PaperMono and PaperMono Lite:** sold in limited batches; M5Stack says the next batch comes next year.
+- **M5Stack PaperMono and PaperMono Lite:** the Lite drops the PaperMono's LoRa and NFC. Both are sold in limited batches; M5Stack says the next batch comes next year.
 - **LilyGo T5 S3 Pro Lite:** a developer board, not a finished reader.
 - **Xteink S4:** went on pre-sale in China on September 14, 2026, at RMB 339 (about $48) for the first batch, then RMB 499 (about $70). Xteink has announced no international release, so it has to be imported.
 
@@ -60,7 +60,7 @@ A few notes on availability:
 - **Button counts** are physical keys, and a rocker counts as two, so the Boox Picco's rocker, function switch, and power key add up to 4. The X4 Classic and X3 counts are inferred from a review, not from a key-by-key spec. The PaperMono count (shown as "5?") is unconfirmed. The LilyGo's user key is treated as the Home button CrossPoint lists.
 - **LilyGo dimensions** come from the T5 S3 Pro wiki. LilyGo says the Lite shares the Pro's design, minus LoRa and GPS. Its weight and white front light come from CrossPoint's device list.
 - **Gyro and RTC** follow CrossPoint's device list. The original X4 has neither, the Metalio has an RTC but no gyro, and the S4 has both.
-- **Lite models** are drawn with their full model's body. In CrossPoint's list, the EEGO A4 Lite differs from the A4 only in weight and front light, and the PaperMono Lite differs from the PaperMono only in weight.
+- **Lite models** are drawn with their full model's body. In CrossPoint's list, the EEGO A4 Lite differs from the A4 only in weight and front light, and the PaperMono Lite is lighter than the PaperMono and has no LoRa or NFC.
 - **EEGO A4 screen** is 3.98", per CrossPoint's device list.
 - **M5Paper v1.1** dimensions come from M5Stack's drawing (67 × 118.6 × 10 mm). Its weight is CrossPoint's 81.6 g; M5Stack's spec sheet says 86 g.
 - **EEGO battery** is the maker's rated figure and hasn't been independently verified.
