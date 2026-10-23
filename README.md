@@ -57,7 +57,7 @@ A few notes on availability:
 - **Screen sizes are calculated, not measured.** Each screen's width and height come from its diagonal and resolution. Screens are drawn centered in the body, so bezels are approximate (Xteink devices actually have a larger bottom chin). The exception is the PaperMono Lite, whose screen size (50.84 × 86.4 mm) and position come from M5Stack's drawing.
 - **Screen-to-body ratio** uses the front footprint only.
 - **Original X4 RAM** is about 400 KB. Xteink's early "128 MB" claim was wrong.
-- **Button counts** are physical keys, and a rocker counts as two, so the Boox Picco's rocker, function switch, and power key add up to 4. The X4 Classic and X3 counts are inferred from a review, not from a key-by-key spec. The PaperMono count (shown as "5?") is unconfirmed. The LilyGo's user key is treated as the Home button CrossPoint lists.
+- **Button counts** are physical keys, and a rocker counts as two, so the Boox Picco's rocker, function switch, and power key add up to 4. The X4 Classic and X3 counts are inferred from a review, not from a key-by-key spec. The LilyGo's user key is treated as the Home button CrossPoint lists.
 - **LilyGo dimensions** come from the T5 S3 Pro wiki. LilyGo says the Lite shares the Pro's design, minus LoRa and GPS. Its weight and white front light come from CrossPoint's device list.
 - **Gyro and RTC** follow CrossPoint's device list. The original X4 has neither, the Metalio has an RTC but no gyro, and the S4 has both.
 - **Lite models:** the EEGO A4 Lite is drawn with the A4's body. The PaperMono Lite uses M5Stack's drawing (61 × 101 × 8 mm, with an 8.7 mm bottom chin). In CrossPoint's list, the EEGO A4 Lite differs from the A4 only in weight and front light, and the PaperMono Lite is lighter than the PaperMono and has no LoRa or NFC.
@@ -110,7 +110,7 @@ sh = D × 25.4 × b / √(a² + b²)
 
 - Sort a table by clicking a column header (for example by weight or battery).
 - Add the Metalio E-Ink 4 Plus.
-- Fill the gaps: Metalio RAM and port type, and the PaperMono button count.
+- Fill the gaps: Metalio RAM and port type.
 
 ## Sources
 
