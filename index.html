@@ -1,1 +1,129 @@
-nothing here yet.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Micro e-reader comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--page:#FFFFFF;--text-primary:#1F2328;--text-secondary:#57606A;--text-muted:#7D8590;--border:#E4E7EB;--border-strong:#D0D7DE;--border-stronger:#AFB8C1;--surface-1:#F4F6F8;--bg-success:#E3F4E8;--text-success:#1A7F37;--bg-warning:#FFF3D1;--text-warning:#8A5A00;--radius:8px}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--page:#16181B;--text-primary:#E6EAEE;--text-secondary:#A2ABB5;--text-muted:#77818C;--border:#2B3138;--border-strong:#3B434C;--border-stronger:#57616C;--surface-1:#1F2328;--bg-success:#18351F;--text-success:#5CCB72;--bg-warning:#382B0E;--text-warning:#E2B547}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+main{max-width:760px;margin:0 auto;padding:32px 20px 48px}
+h1{font-size:22px;font-weight:500;margin:0 0 4px}
+.lede{color:var(--text-secondary);font-size:15px;margin:0 0 16px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+button:focus-visible,input:focus-visible,tr.r:focus-visible{outline:2px solid #378ADD;outline-offset:2px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:0.5px solid var(--border-strong);border-radius:var(--radius);background:transparent;color:var(--text-primary);font:inherit;font-size:13px;cursor:pointer;transition:opacity .15s}
+.chip.off,tr.off{opacity:.35}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block;flex:none}
+.seg{padding:4px 10px;border:0.5px solid var(--border-strong);background:transparent;color:var(--text-secondary);font:inherit;font-size:13px;cursor:pointer;border-radius:var(--radius)}
+.seg.on{color:var(--text-primary);border-color:var(--border-stronger);background:var(--surface-1)}
+.tb{width:100%;border-collapse:collapse;font-size:13px}
+.tb th{text-align:left;font-weight:500;color:var(--text-secondary);padding:6px;border-bottom:0.5px solid var(--border-strong);white-space:nowrap}
+.tb td{padding:6px;border-bottom:0.5px solid var(--border);color:var(--text-primary);white-space:nowrap}
+.tb tr.r{cursor:pointer;transition:opacity .15s}
+.tb tr.r:hover td{background:var(--surface-1)}
+.tb .num{text-align:right;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px}
+.y{background:var(--bg-success);color:var(--text-success)}
+.n{background:var(--surface-1);color:var(--text-muted)}
+.p{background:var(--bg-warning);color:var(--text-warning)}
+.cap{font-size:14px;font-weight:500;color:var(--text-secondary);margin:24px 0 4px}
+.wrap{overflow-x:auto}
+.note{font-size:12px;color:var(--text-muted);margin:12px 0 0}
+@media (prefers-reduced-motion:reduce){.chip,.tb tr.r{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Micro e-reader comparison</h1>
+<p class="lede">Ten ESP32-based pocket E Ink readers, drawn to scale. Data as of October 2026.</p>
+<h2 class="sr-only">To-scale outlines of ten micro e-readers that can be superimposed or placed side by side, with tables for size and screen, controls and body, and hardware.</h2>
+<div id="chips" style="display:flex;flex-wrap:wrap;gap:6px;padding:0.5rem 0 0.75rem"></div>
+<svg id="ov" width="100%" viewBox="0 0 680 420" role="img" aria-label="Device outlines"></svg>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--text-secondary)">
+<span>Align</span>
+<button class="seg on" id="a-center" onclick="setAlign('center')">Center</button>
+<button class="seg" id="a-bottom" onclick="setAlign('bottom')">Bottom</button>
+<button class="seg" id="a-side" onclick="setAlign('side')">Side by side</button>
+<label style="display:flex;align-items:center;gap:6px;margin-left:12px;cursor:pointer"><input type="checkbox" id="scr" checked onchange="draw()">Show screens</label>
+<button class="seg" style="margin-left:auto" onclick="setAll(true)">All</button>
+<button class="seg" onclick="setAll(false)">None</button>
+</div>
+<div class="cap">Size and screen</div>
+<div class="wrap"><table class="tb"><thead><tr><th>Device</th><th>Screen</th><th>Resolution</th><th class="num">PPI</th><th class="num">W × H × D (mm)</th><th class="num">Weight</th><th class="num">Screen area</th><th class="num">Screen-to-body</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="cap">Controls and body</div>
+<div class="wrap"><table class="tb"><thead><tr><th>Device</th><th>Touchscreen</th><th>Physical buttons</th><th>Front light</th><th>Magnetic back</th></tr></thead><tbody id="rows3"></tbody></table></div>
+<div class="cap">Hardware</div>
+<div class="wrap"><table class="tb"><thead><tr><th>Device</th><th>Chip</th><th>RAM</th><th class="num">Battery</th><th>Charging</th><th>CrossPoint</th></tr></thead><tbody id="rows2"></tbody></table></div>
+<p class="note">Tap a row or chip to toggle; hover to highlight. Button counts are physical keys; a rocker counts as two. "+ touch Home" is a capacitive key. "Not listed" means the maker doesn't mention a magnet. LilyGo's magnet is the MagSafe charging alignment ring. PPI uses published figures where available. ESP32-C3 devices have ~400 KB internal RAM and no external PSRAM. EEGO battery is the rated figure. LilyGo dimensions come from the T5 S3 Pro spec. Screens are drawn centered, so bezel positions are approximate.</p>
+</main>
+<script>
+const devs=[
+{n:'Xteink X4',s:'X4',w:69,h:114,t:5.9,g:'74 g',diag:'4.3"',res:'480 × 800',ppi:220,sw:56.19,sh:93.65,c:'#7F77DD',on:true,chip:'ESP32-C3',ram:'~400 KB',bat:650,fl:['n','No'],chg:'USB-C',cp:['y','Official'],tch:['n','No'],btn:'7: 4 front, 2 side, power',mag:['y','Yes, MagSafe']},
+{n:'Xteink X4 Classic',s:'X4 Classic',w:69,h:114,t:4.9,g:'68 g',diag:'4.3"',res:'480 × 800',ppi:219,sw:56.19,sh:93.65,c:'#D4537E',on:false,d:'8 4',chip:'ESP32-S3',ram:'8 MB PSRAM',bat:920,fl:['n','No'],chg:'Pogo pins',cp:['y','Official'],tch:['n','No'],btn:'7: 4 front, 2 side, power',mag:['y','Yes']},
+{n:'Xteink X4 Pro',s:'X4 Pro',w:69,h:111,t:5.95,g:'72 g',diag:'4.3"',res:'480 × 800',ppi:219,sw:56.19,sh:93.65,c:'#378ADD',on:true,chip:'ESP32-S3',ram:'PSRAM',bat:1100,fl:['y','Warm/cool'],chg:'Pogo pins',cp:['y','Official'],tch:['y','Yes'],btn:'3: 2 side, power + touch Home',mag:['y','Yes']},
+{n:'Xteink X3',s:'X3',w:63.7,h:97.6,t:5.1,g:'58 g',diag:'3.7"',res:'528 × 792',ppi:259,sw:52.13,sh:78.19,c:'#D85A30',on:true,chip:'ESP32-C3',ram:'~400 KB',bat:650,fl:['n','No'],chg:'Pogo pins',cp:['y','Official'],tch:['n','No'],btn:'7: 4 front, 2 side, power',mag:['y','Yes']},
+{n:'Boox Picco',s:'Picco',w:62,h:105.5,t:5.5,g:'58 g',diag:'3.97"',res:'480 × 800',ppi:235,sw:51.88,sh:86.47,c:'#1D9E75',on:true,chip:'ESP32-S3',ram:'No PSRAM',bat:920,fl:['y','Warm/cool'],chg:'USB-C',cp:['y','Official'],tch:['y','Yes'],btn:'Page rocker, function switch, power',mag:['p','Via case only']},
+{n:'Metalio E-Ink 4',s:'Metalio 4',w:63.7,h:107,t:6.8,g:'70 g',diag:'3.97"',res:'480 × 800',ppi:235,sw:51.88,sh:86.47,c:'#888780',on:false,chip:'ESP32-S3',ram:'—',bat:1000,fl:['n','No'],chg:'USB',cp:['y','Official'],tch:['y','Yes'],btn:'Physical + touch keys (count n/p)',mag:['n','Not listed']},
+{n:'Seeed Sticky',s:'Sticky',w:65.5,h:106,t:7.3,g:'70 g',diag:'3.97"',res:'480 × 800',ppi:235,sw:51.88,sh:86.47,c:'#BA7517',on:false,chip:'ESP32-S3',ram:'8 MB PSRAM',bat:750,fl:['n','No'],chg:'USB-C',cp:['y','Official'],tch:['y','Yes'],btn:'3: power, up, down',mag:['y','Yes']},
+{n:'M5 PaperMono',s:'PaperMono',w:61,h:101,t:7.95,g:'74.7 g',diag:'3.97"',res:'480 × 800',ppi:235,sw:51.88,sh:86.47,c:'#639922',on:false,chip:'ESP32-S3',ram:'8 MB PSRAM',bat:1150,fl:['y','Yes'],chg:'USB-C',cp:['y','Official'],tch:['y','Yes'],btn:'Power + user keys (count n/p)',mag:['n','Not listed']},
+{n:'EEGO A4',s:'EEGO A4',w:68.5,h:98.5,t:8,g:'76 g',diag:'4.0"',res:'552 × 768',ppi:238,sw:59.30,sh:82.50,c:'#E24B4A',on:false,chip:'ESP32-S3',ram:'8 MB PSRAM',bat:2000,fl:['p','A4 Pro only'],chg:'USB-C',cp:['y','Official'],tch:['y','Yes'],btn:'3: 2 side, power + touch Home',mag:['y','Yes']},
+{n:'LilyGo T5 S3 Pro Lite',s:'LilyGo T5',w:69,h:129,t:11,g:'—',diag:'4.7"',res:'540 × 960',ppi:234,sw:58.53,sh:104.05,c:'#5DCAA5',on:true,d:'10 3 2 3',chip:'ESP32-S3',ram:'8 MB PSRAM',bat:1500,fl:['y','Warm'],chg:'USB-C + MagSafe',cp:['p','Community'],tch:['y','Yes, 2-point'],btn:'4: power, user, boot, reset',mag:['p','MagSafe charging ring']}];
+const CX=340,CY=212,BASE=404,NS='http://www.w3.org/2000/svg';
+let align='center',hl=null;
+const chips=document.getElementById('chips'),svg=document.getElementById('ov');
+const R=[document.getElementById('rows'),document.getElementById('rows3'),document.getElementById('rows2')];
+function toggle(d){d.on=!d.on;sync(d);draw()}
+function sync(d){d.btn.classList.toggle('off',!d.on);d.btn.setAttribute('aria-pressed',d.on);d.trs.forEach(t=>{t.classList.toggle('off',!d.on);t.setAttribute('aria-pressed',d.on)})}
+function name(d){return '<td><span style="display:inline-flex;align-items:center;gap:6px"><span class="sw" style="background:'+d.c+'"></span>'+d.n+'</span></td>'}
+function tag(a){return '<span class="tag '+a[0]+'">'+a[1]+'</span>'}
+function mk(d,html,body){const tr=document.createElement('tr');tr.className='r';tr.tabIndex=0;tr.onclick=()=>toggle(d);tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(d)}};tr.onmouseenter=()=>{hl=d;draw()};tr.onmouseleave=()=>{hl=null;draw()};tr.innerHTML=name(d)+html;body.appendChild(tr);d.trs.push(tr)}
+devs.forEach(d=>{
+d.trs=[];
+const b=document.createElement('button');b.className='chip';b.innerHTML='<span class="sw" style="background:'+d.c+'"></span>'+d.s;b.onclick=()=>toggle(d);b.onmouseenter=()=>{hl=d;draw()};b.onmouseleave=()=>{hl=null;draw()};b.onfocus=()=>{hl=d;draw()};b.onblur=()=>{hl=null;draw()};d.btn=b;chips.appendChild(b);
+const area=d.sw*d.sh/100,ratio=(area/(d.w*d.h/100)*100).toFixed(0)+'%';
+mk(d,'<td>'+d.diag+'</td><td>'+d.res+'</td><td class="num">'+d.ppi+'</td><td class="num">'+d.w+' × '+d.h+' × '+d.t+'</td><td class="num">'+d.g+'</td><td class="num">'+area.toFixed(1)+' cm²</td><td class="num">'+ratio+'</td>',R[0]);
+mk(d,'<td>'+tag(d.tch)+'</td><td>'+d.btn+'</td><td>'+tag(d.fl)+'</td><td>'+tag(d.mag)+'</td>',R[1]);
+mk(d,'<td>'+d.chip+'</td><td>'+d.ram+'</td><td class="num">'+d.bat.toLocaleString()+' mAh</td><td>'+d.chg+'</td><td>'+tag(d.cp)+'</td>',R[2]);
+sync(d)});
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e}
+function shape(d,x,y,S){
+const big=d===hl,dim=hl&&!big?0.45:1;
+svg.appendChild(el('rect',{x,y,width:d.w*S,height:d.h*S,rx:Math.max(4,4.7*S),fill:'none',stroke:d.c,'stroke-width':big?3:1.6,'stroke-dasharray':d.d||'none',opacity:dim}));
+if(document.getElementById('scr').checked){svg.appendChild(el('rect',{x:x+(d.w-d.sw)*S/2,y:y+(d.h-d.sh)*S/2,width:d.sw*S,height:d.sh*S,rx:2,fill:d.c,'fill-opacity':big?0.15:0.07,stroke:d.c,'stroke-width':big?1.6:1,'stroke-dasharray':'4 3',opacity:dim}))}
+}
+function scaleBar(S){
+svg.appendChild(el('line',{x1:40,y1:30,x2:40+10*S,y2:30,stroke:'var(--text-secondary)','stroke-width':1.5}));
+const t=el('text',{x:40,y:20,'font-size':12,fill:'var(--text-secondary)','font-family':'inherit'});t.textContent='10 mm';svg.appendChild(t);
+}
+function draw(){
+svg.innerHTML='';
+if(align==='side'){
+const list=devs.filter(d=>d.on);
+if(!list.length){scaleBar(3);return}
+const gap=16,SB=372,sumW=list.reduce((a,d)=>a+d.w,0),maxH=Math.max(...list.map(d=>d.h));
+const S=Math.min(2.6,(600-gap*(list.length-1))/sumW,(SB-45)/maxH);
+const stagger=list.length>5;
+let x=CX-(sumW*S+gap*(list.length-1))/2;
+scaleBar(S);
+list.forEach((d,i)=>{
+shape(d,x,SB-d.h*S,S);
+const lb=el('text',{x:x+d.w*S/2,y:SB+18+(stagger&&i%2?16:0),'text-anchor':'middle','font-size':12,'font-family':'inherit',fill:d===hl?'var(--text-primary)':'var(--text-secondary)'});lb.textContent=d.s;svg.appendChild(lb);
+x+=d.w*S+gap});
+return}
+const S=3;scaleBar(S);
+let list=devs.filter(d=>d.on||d===hl).sort((a,b)=>b.h-a.h);
+if(hl){list=list.filter(d=>d!==hl);list.push(hl)}
+list.forEach(d=>shape(d,CX-d.w*S/2,align==='center'?CY-d.h*S/2:BASE-d.h*S,S));
+}
+function setAlign(a){align=a;['center','bottom','side'].forEach(k=>document.getElementById('a-'+k).classList.toggle('on',a===k));draw()}
+function setAll(v){devs.forEach(d=>{d.on=v;sync(d)});draw()}
+draw();
+</script>
+</body>
+</html>
