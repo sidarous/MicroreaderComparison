@@ -41,8 +41,8 @@ button:focus-visible,input:focus-visible,tr.r:focus-visible{outline:2px solid #3
 <body>
 <main>
 <h1>Micro e-reader comparison</h1>
-<p class="lede">Ten ESP32-based pocket E Ink readers, drawn to scale. Data as of October 2026.</p>
-<h2 class="sr-only">To-scale outlines of ten micro e-readers that can be superimposed or placed side by side, a side view comparing thickness, and tables for size and screen, controls and body, and hardware.</h2>
+<p class="lede">Ten ESP32-based pocket E Ink readers, plus the Android-based Xteink S4 for reference, drawn to scale. Data as of October 2026.</p>
+<h2 class="sr-only">To-scale outlines of eleven pocket e-readers that can be superimposed or placed side by side, a side view comparing thickness, and tables for size and screen, controls and body, and hardware.</h2>
 <div id="chips" style="display:flex;flex-wrap:wrap;gap:6px;padding:0.5rem 0 0.75rem"></div>
 <svg id="ov" width="100%" viewBox="0 0 680 420" role="img" aria-label="Device outlines"></svg>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--text-secondary)">
@@ -62,7 +62,7 @@ button:focus-visible,input:focus-visible,tr.r:focus-visible{outline:2px solid #3
 <div class="wrap"><table class="tb"><thead><tr><th>Device</th><th>Touchscreen</th><th>Physical buttons</th><th>Front light</th><th>Magnetic back</th></tr></thead><tbody id="rows3"></tbody></table></div>
 <div class="cap">Hardware</div>
 <div class="wrap"><table class="tb"><thead><tr><th>Device</th><th>Chip</th><th>RAM</th><th class="num">Battery</th><th>Charging</th><th>CrossPoint</th></tr></thead><tbody id="rows2"></tbody></table></div>
-<p class="note">Tap a row or chip to toggle; hover to highlight. Button counts are physical keys; a rocker counts as two. "+ touch Home" is a capacitive key. "Not listed" means the maker doesn't mention a magnet. LilyGo's magnet is the MagSafe charging alignment ring. PPI uses published figures where available. ESP32-C3 devices have ~400 KB internal RAM and no external PSRAM. EEGO battery is the rated figure. LilyGo dimensions come from the T5 S3 Pro spec. Screens are drawn centered, so bezel positions are approximate. The thickness view shows each device from the side, laid flat, at the same scale as the Center and Bottom views.</p>
+<p class="note">Tap a row or chip to toggle; hover to highlight. Button counts are physical keys; a rocker counts as two. "+ touch Home" is a capacitive key. "Not listed" means the maker doesn't mention a magnet. LilyGo's magnet is the MagSafe charging alignment ring. PPI uses published figures where available. ESP32-C3 devices have ~400 KB internal RAM and no external PSRAM. EEGO battery is the rated figure. LilyGo dimensions come from the T5 S3 Pro spec. Screens are drawn centered, so bezel positions are approximate. The thickness view shows each device from the side, laid flat, at the same scale as the Center and Bottom views. The Xteink S4 is here for reference only: it runs a 32-bit Android 11 Go build on a Rockchip RK3326 instead of an ESP32. 64-bit-only apps won't install, its security patch dates from October 2021, and KOReader comes preinstalled as the main ePub reader. Some spec sheets list its resolution as 800 × 600. Its width and height come from a single pre-launch report.</p>
 </main>
 <script>
 const devs=[
@@ -75,7 +75,8 @@ const devs=[
 {n:'Seeed Sticky',s:'Sticky',w:65.5,h:106,t:7.3,g:'70 g',diag:'3.97"',res:'480 × 800',ppi:235,sw:51.88,sh:86.47,c:'#BA7517',on:false,chip:'ESP32-S3',ram:'8 MB PSRAM',bat:750,fl:['n','No'],chg:'USB-C',cp:['y','Official'],tch:['y','Yes'],btn:'3: power, up, down',mag:['y','Yes']},
 {n:'M5 PaperMono',s:'PaperMono',w:61,h:101,t:7.95,g:'74.7 g',diag:'3.97"',res:'480 × 800',ppi:235,sw:51.88,sh:86.47,c:'#639922',on:false,chip:'ESP32-S3',ram:'8 MB PSRAM',bat:1150,fl:['y','Yes'],chg:'USB-C',cp:['y','Official'],tch:['y','Yes'],btn:'Power + user keys (count unpublished)',mag:['n','Not listed']},
 {n:'EEGO A4',s:'EEGO A4',w:68.5,h:98.5,t:8,g:'76 g',diag:'4.0"',res:'552 × 768',ppi:238,sw:59.30,sh:82.50,c:'#E24B4A',on:false,chip:'ESP32-S3',ram:'8 MB PSRAM',bat:2000,fl:['p','A4 Pro only'],chg:'USB-C',cp:['y','Official'],tch:['y','Yes'],btn:'3: 2 side, power + touch Home',mag:['y','Yes']},
-{n:'LilyGo T5 S3 Pro Lite',s:'LilyGo T5',w:69,h:129,t:11,g:'—',diag:'4.7"',res:'540 × 960',ppi:234,sw:58.53,sh:104.05,c:'#5DCAA5',on:true,d:'10 3 2 3',chip:'ESP32-S3',ram:'8 MB PSRAM',bat:1500,fl:['y','Warm'],chg:'USB-C + MagSafe',cp:['p','Community'],tch:['y','Yes, 2-point'],btn:'4: power, user, boot, reset',mag:['p','MagSafe charging ring']}];
+{n:'LilyGo T5 S3 Pro Lite',s:'LilyGo T5',w:69,h:129,t:11,g:'—',diag:'4.7"',res:'540 × 960',ppi:234,sw:58.53,sh:104.05,c:'#5DCAA5',on:true,d:'10 3 2 3',chip:'ESP32-S3',ram:'8 MB PSRAM',bat:1500,fl:['y','Warm'],chg:'USB-C + MagSafe',cp:['p','Community'],tch:['y','Yes, 2-point'],btn:'4: power, user, boot, reset',mag:['p','MagSafe charging ring']},
+{n:'Xteink S4 (Android)',s:'S4 (Android)',w:70,h:112,t:6.98,g:'95 g',diag:'4.3"',res:'480 × 800',ppi:220,sw:56.19,sh:93.65,c:'#A34FB8',on:false,d:'2 3',chip:'Rockchip RK3326 (quad-core)',ram:'2 GB',bat:1400,fl:['y','Warm/cool'],chg:'USB-C',cp:['n','No, KOReader preinstalled'],tch:['y','Yes'],btn:'Side page keys + front Home (count unpublished)',mag:['y','Yes, MagSafe']}];
 const CX=340,CY=212,BASE=404,NS='http://www.w3.org/2000/svg';
 let align='center',hl=null;
 const chips=document.getElementById('chips'),svg=document.getElementById('ov'),th=document.getElementById('th');

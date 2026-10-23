@@ -1,12 +1,14 @@
 # Micro e-reader comparison
 
-An interactive, to-scale comparison of ten pocket E Ink readers built on ESP32 microcontrollers.
+An interactive, to-scale comparison of ten pocket E Ink readers built on ESP32 microcontrollers, plus the Android-based Xteink S4 for reference.
 
 **View it live:** https://mark.sidarous.net/MicroreaderComparison/
 
 ## What's a micro e-reader?
 
 "Micro e-readers" are the category of pocket E Ink readers started by the Xteink X4. Instead of a phone-class Android chip, they run on a low-power ESP32-C3 or ESP32-S3 microcontroller. Most of them can run [CrossPoint](https://github.com/crosspoint-reader/crosspoint-reader), an open-source reader firmware.
+
+The **Xteink S4** is the exception. It's the same size class as the X4, but it runs Android, so it's on the page as a point of comparison. On the page, its name is marked "(Android)" and its outline is dotted.
 
 ## What the page does
 
@@ -33,6 +35,7 @@ Everything is in one file, `index.html`, with no build step. The only outside re
 | M5Stack PaperMono | ESP32-S3 | 3.97" 480×800 | 61 × 101 × 7.95 | 74.7 g | 1150 mAh | Yes | Yes | Official | $65 (Lite $55) |
 | EEGO A4 / A4 Pro | ESP32-S3 | 4.0" 552×768 | 68.5 × 98.5 × 8 | 76 g | 2000 mAh (rated) | A4 Pro only | Yes | Official | ~$35, China only |
 | LilyGo T5 E-Paper S3 Pro Lite | ESP32-S3 | 4.7" 540×960 | 69 × 129 × 11 | Unpublished | 1500 mAh | Warm | Yes | Community forks | $71.31 |
+| Xteink S4 (Android) | Rockchip RK3326 | 4.3" 480×800 | 70 × 112 × 6.98 | 95 g | 1400 mAh | Warm/cool | Yes | No (KOReader preinstalled) | RMB 339–499, China only |
 
 The page also covers RAM, charging port, button counts, and magnetic backs. The thinnest device is the X4 Classic at 4.9 mm, and the thickest is the LilyGo at 11 mm.
 
@@ -43,6 +46,7 @@ A few notes on availability:
 - **EEGO A4:** Chinese-only stock firmware, with publicly reported quality-control issues.
 - **M5Stack PaperMono:** sold in limited batches; M5Stack says the next batch comes next year.
 - **LilyGo T5 S3 Pro Lite:** a developer board, not a finished reader.
+- **Xteink S4:** went on pre-sale in China on September 14, 2026, at RMB 339 (about $48) for the first batch, then RMB 499 (about $70). Xteink has announced no international release, so it has to be imported.
 
 ## Data caveats
 
@@ -53,12 +57,19 @@ A few notes on availability:
 - **LilyGo dimensions** come from the T5 S3 Pro wiki. LilyGo says the Lite shares the Pro's design, minus LoRa and GPS.
 - **EEGO battery** is the maker's rated figure and hasn't been independently verified.
 - **"Not listed" for magnets** means the maker doesn't mention one, not a confirmed "no".
+- **Xteink S4:**
+  - It runs a 32-bit Android 11 Go build on a quad-core Rockchip RK3326, so 64-bit-only apps won't install.
+  - Its security patch is from October 2021, which is hard to defend on a 2026 device.
+  - KOReader comes preinstalled as a system app and is the main ePub reader.
+  - Some spec sheets list its resolution as 800 × 600 rather than 480 × 800.
+  - The 112 × 70 mm footprint comes from a single pre-launch report. Thickness (6.98 mm) and weight (95 g) are the most widely reported figures, though one source gives 89 g.
+  - Reports disagree on the buttons: physical side page-turn keys plus a front Home key that may be capacitive.
 
 ## Devices left out
 
 - **Murphy M4:** width, height, and weight are unpublished, so it can't be drawn to scale.
 - **Metalio E-Ink 4 Plus:** 4.7", 684×1216, 122 × 71 × 7.8 mm. Weight and price unconfirmed.
-- **Xteink S4 and EEGO P4:** Android-based, so outside the ESP32 category.
+- **EEGO P4:** Android-based, so outside the ESP32 category. (The Android Xteink S4 is included, but only for reference.)
 - **Xteink X4 Light:** leaked only, with no confirmed specs.
 - **M5Stack PaperS3:** end of life.
 
@@ -110,3 +121,8 @@ sh = D × 25.4 × b / √(a² + b²)
 - [LilyGo: T5 S3 Pro wiki](https://wiki.lilygo.cc/products/t5-series/t5-e-paper-s3-pro/)
 - [LilyGo: T5 S3 Pro Lite store page](https://lilygo.cc/en-us/products/t5-e-paper-s3-pro-lite)
 - [Read with Pro: Murphy M4 specs](https://www.readwithpro.com/devices/murphy-m4)
+- [Notebookcheck: Xteink S4 debuts with Android 11](https://www.notebookcheck.net/Xteink-S4-Pocket-e-reader-debuts-with-Android-11-4-3-inch-display-and-32GB.1400952.0.html)
+- [Good e-Reader: Xteink S4 is available now](https://goodereader.com/blog/electronic-readers/xteink-s4-is-available-now-with-usb-c-and-a-front-light)
+- [The eBook Reader: Xteink S4 released](https://blog.the-ebook-reader.com/2026/09/15/xteink-s4-released-with-android-frontlight-and-usb-c/)
+- [PocketInk: Xteink S4 China release, price, and specs](https://pocketink.io/blog/xteink-s4-everything-we-know/)
+- [Joshua Lowcock: Xteink S4 guide](https://www.joshualowcock.com/xteink/guide-xteink-s4-all-we-know-about-the-potential-successor-to-the-x4/)
