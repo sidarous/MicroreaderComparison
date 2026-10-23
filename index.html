@@ -42,7 +42,7 @@ button:focus-visible,input:focus-visible,tr.r:focus-visible{outline:2px solid #3
 <main>
 <h1>Micro e-reader comparison</h1>
 <p class="lede">Ten ESP32-based pocket E Ink readers, drawn to scale. Data as of October 2026.</p>
-<h2 class="sr-only">To-scale outlines of ten micro e-readers that can be superimposed or placed side by side, with tables for size and screen, controls and body, and hardware.</h2>
+<h2 class="sr-only">To-scale outlines of ten micro e-readers that can be superimposed or placed side by side, a side view comparing thickness, and tables for size and screen, controls and body, and hardware.</h2>
 <div id="chips" style="display:flex;flex-wrap:wrap;gap:6px;padding:0.5rem 0 0.75rem"></div>
 <svg id="ov" width="100%" viewBox="0 0 680 420" role="img" aria-label="Device outlines"></svg>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--text-secondary)">
@@ -54,13 +54,15 @@ button:focus-visible,input:focus-visible,tr.r:focus-visible{outline:2px solid #3
 <button class="seg" style="margin-left:auto" onclick="setAll(true)">All</button>
 <button class="seg" onclick="setAll(false)">None</button>
 </div>
+<div class="cap">Thickness (side view)</div>
+<svg id="th" width="100%" viewBox="0 0 680 40" role="img" aria-label="Device thickness, side view"></svg>
 <div class="cap">Size and screen</div>
 <div class="wrap"><table class="tb"><thead><tr><th>Device</th><th>Screen</th><th>Resolution</th><th class="num">PPI</th><th class="num">W × H × D (mm)</th><th class="num">Weight</th><th class="num">Screen area</th><th class="num">Screen-to-body</th></tr></thead><tbody id="rows"></tbody></table></div>
 <div class="cap">Controls and body</div>
 <div class="wrap"><table class="tb"><thead><tr><th>Device</th><th>Touchscreen</th><th>Physical buttons</th><th>Front light</th><th>Magnetic back</th></tr></thead><tbody id="rows3"></tbody></table></div>
 <div class="cap">Hardware</div>
 <div class="wrap"><table class="tb"><thead><tr><th>Device</th><th>Chip</th><th>RAM</th><th class="num">Battery</th><th>Charging</th><th>CrossPoint</th></tr></thead><tbody id="rows2"></tbody></table></div>
-<p class="note">Tap a row or chip to toggle; hover to highlight. Button counts are physical keys; a rocker counts as two. "+ touch Home" is a capacitive key. "Not listed" means the maker doesn't mention a magnet. LilyGo's magnet is the MagSafe charging alignment ring. PPI uses published figures where available. ESP32-C3 devices have ~400 KB internal RAM and no external PSRAM. EEGO battery is the rated figure. LilyGo dimensions come from the T5 S3 Pro spec. Screens are drawn centered, so bezel positions are approximate.</p>
+<p class="note">Tap a row or chip to toggle; hover to highlight. Button counts are physical keys; a rocker counts as two. "+ touch Home" is a capacitive key. "Not listed" means the maker doesn't mention a magnet. LilyGo's magnet is the MagSafe charging alignment ring. PPI uses published figures where available. ESP32-C3 devices have ~400 KB internal RAM and no external PSRAM. EEGO battery is the rated figure. LilyGo dimensions come from the T5 S3 Pro spec. Screens are drawn centered, so bezel positions are approximate. The thickness view shows each device from the side, laid flat, at the same scale as the Center and Bottom views.</p>
 </main>
 <script>
 const devs=[
@@ -76,7 +78,7 @@ const devs=[
 {n:'LilyGo T5 S3 Pro Lite',s:'LilyGo T5',w:69,h:129,t:11,g:'—',diag:'4.7"',res:'540 × 960',ppi:234,sw:58.53,sh:104.05,c:'#5DCAA5',on:true,d:'10 3 2 3',chip:'ESP32-S3',ram:'8 MB PSRAM',bat:1500,fl:['y','Warm'],chg:'USB-C + MagSafe',cp:['p','Community'],tch:['y','Yes, 2-point'],btn:'4: power, user, boot, reset',mag:['p','MagSafe charging ring']}];
 const CX=340,CY=212,BASE=404,NS='http://www.w3.org/2000/svg';
 let align='center',hl=null;
-const chips=document.getElementById('chips'),svg=document.getElementById('ov');
+const chips=document.getElementById('chips'),svg=document.getElementById('ov'),th=document.getElementById('th');
 const R=[document.getElementById('rows'),document.getElementById('rows3'),document.getElementById('rows2')];
 function toggle(d){d.on=!d.on;sync(d);draw()}
 function sync(d){d.chipEl.classList.toggle('off',!d.on);d.chipEl.setAttribute('aria-pressed',d.on);d.trs.forEach(t=>{t.classList.toggle('off',!d.on);t.setAttribute('aria-pressed',d.on)})}
@@ -97,12 +99,24 @@ const big=d===hl,dim=hl&&!big?0.45:1;
 svg.appendChild(el('rect',{x,y,width:d.w*S,height:d.h*S,rx:Math.max(4,4.7*S),fill:'none',stroke:d.c,'stroke-width':big?3:1.6,'stroke-dasharray':d.d||'none',opacity:dim}));
 if(document.getElementById('scr').checked){svg.appendChild(el('rect',{x:x+(d.w-d.sw)*S/2,y:y+(d.h-d.sh)*S/2,width:d.sw*S,height:d.sh*S,rx:2,fill:d.c,'fill-opacity':big?0.15:0.07,stroke:d.c,'stroke-width':big?1.6:1,'stroke-dasharray':'4 3',opacity:dim}))}
 }
-function scaleBar(S){
-svg.appendChild(el('line',{x1:40,y1:30,x2:40+10*S,y2:30,stroke:'var(--text-secondary)','stroke-width':1.5}));
-const t=el('text',{x:40,y:20,'font-size':12,fill:'var(--text-secondary)','font-family':'inherit'});t.textContent='10 mm';svg.appendChild(t);
+function scaleBar(S,to=svg){
+to.appendChild(el('line',{x1:40,y1:30,x2:40+10*S,y2:30,stroke:'var(--text-secondary)','stroke-width':1.5}));
+const t=el('text',{x:40,y:20,'font-size':12,fill:'var(--text-secondary)','font-family':'inherit'});t.textContent='10 mm';to.appendChild(t);
+}
+function drawThick(){
+const S=3,LX=150,VX=565,GAP=14,list=devs.filter(d=>d.on).sort((a,b)=>a.t-b.t);
+th.innerHTML='';scaleBar(S,th);
+let y=48;
+list.forEach(d=>{
+const big=d===hl,dim=hl&&!big?0.45:1,h=d.t*S,ty=y+h/2+4,fill=big?'var(--text-primary)':'var(--text-secondary)';
+th.appendChild(el('rect',{x:LX+12,y,width:d.h*S,height:h,rx:Math.min(h/2,6),fill:d.c,'fill-opacity':big?0.3:0.15,stroke:d.c,'stroke-width':big?2.5:1.4,'stroke-dasharray':d.d||'none',opacity:dim}));
+const lb=el('text',{x:LX,y:ty,'text-anchor':'end','font-size':12,'font-family':'inherit',fill});lb.textContent=d.s;th.appendChild(lb);
+const v=el('text',{x:VX,y:ty,'font-size':12,'font-family':'inherit',fill});v.textContent=d.t+' mm';th.appendChild(v);
+y+=h+GAP});
+th.setAttribute('viewBox','0 0 680 '+(list.length?y-GAP+12:40));
 }
 function draw(){
-svg.innerHTML='';
+svg.innerHTML='';drawThick();
 if(align==='side'){
 const list=devs.filter(d=>d.on);
 if(!list.length){scaleBar(3);return}

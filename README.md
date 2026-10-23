@@ -2,7 +2,7 @@
 
 An interactive, to-scale comparison of ten pocket E Ink readers built on ESP32 microcontrollers.
 
-**View it live:** https://sidarous.github.io/MicroreaderComparison/
+**View it live:** https://mark.sidarous.net/MicroreaderComparison/
 
 ## What's a micro e-reader?
 
@@ -12,8 +12,9 @@ An interactive, to-scale comparison of ten pocket E Ink readers built on ESP32 m
 
 - **To-scale outlines** of each device, with the screen area shaded inside the body.
 - **Three layouts:** superimposed and centered, superimposed and bottom-aligned, or side by side.
+- **Thickness side view:** each device seen from the side and laid flat, sorted thinnest to thickest, with its depth in mm. It uses the same scale as the Center and Bottom layouts.
 - **Toggles:** turn devices on and off with the color chips or by clicking a table row. Use All / None for everything at once, and "Show screens" to hide the screen shading.
-- **Hover highlighting:** hover a chip or row to bring that device to the front.
+- **Hover highlighting:** hover a chip or row to bring that device to the front and dim the rest.
 - **Three tables:** Size and screen, Controls and body, and Hardware.
 
 Everything is in one file, `index.html`, with no build step. The only outside request is the IBM Plex Sans font from Google Fonts, and the page falls back to system fonts without it.
@@ -33,7 +34,7 @@ Everything is in one file, `index.html`, with no build step. The only outside re
 | EEGO A4 / A4 Pro | ESP32-S3 | 4.0" 552×768 | 68.5 × 98.5 × 8 | 76 g | 2000 mAh (rated) | A4 Pro only | Yes | Official | ~$35, China only |
 | LilyGo T5 E-Paper S3 Pro Lite | ESP32-S3 | 4.7" 540×960 | 69 × 129 × 11 | Unpublished | 1500 mAh | Warm | Yes | Community forks | $71.31 |
 
-The page also covers RAM, charging port, button layout, and magnetic backs.
+The page also covers RAM, charging port, button counts, and magnetic backs. The thinnest device is the X4 Classic at 4.9 mm, and the thickest is the LilyGo at 11 mm.
 
 A few notes on availability:
 
@@ -48,7 +49,7 @@ A few notes on availability:
 - **Screen sizes are calculated, not measured.** Each screen's width and height come from its diagonal and resolution. Screens are drawn centered in the body, so bezels are approximate (Xteink devices actually have a larger bottom chin).
 - **Screen-to-body ratio** uses the front footprint only.
 - **Original X4 RAM** is about 400 KB. Xteink's early "128 MB" claim was wrong.
-- **X4 Classic and X3 button counts** are inferred from a review, not from a key-by-key spec.
+- **Button counts** are physical keys, and a rocker counts as two, so the Boox Picco's rocker, function switch, and power key add up to 4. The X4 Classic and X3 counts are inferred from a review, not from a key-by-key spec. Metalio and PaperMono don't publish a count.
 - **LilyGo dimensions** come from the T5 S3 Pro wiki. LilyGo says the Lite shares the Pro's design, minus LoRa and GPS.
 - **EEGO battery** is the maker's rated figure and hasn't been independently verified.
 - **"Not listed" for magnets** means the maker doesn't mention one, not a confirmed "no".
@@ -88,7 +89,6 @@ sh = D × 25.4 × b / √(a² + b²)
 ## Ideas
 
 - Sort a table by clicking a column header (for example by weight or battery).
-- Add a side view comparing thickness.
 - Add the Metalio E-Ink 4 Plus.
 - Fill the gaps: X4 Pro PSRAM size, Metalio RAM and port type, PaperMono and Metalio button counts, and LilyGo weight.
 
