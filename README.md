@@ -34,7 +34,7 @@ Everything is in one file, `index.html`, with no build step. The only outside re
 | Metalio E-Ink 4 | ESP32-S3 | 3.97" 480×800 | 63.7 × 107 × 6.8 | 70 g | 1000 mAh | No | Yes | Official | $72 |
 | Seeed reTerminal Sticky | ESP32-S3 | 3.97" 480×800 | 65.5 × 106 × 7.3 | 70 g | 750 mAh | No | Yes | Official | $49.90 |
 | M5Stack PaperMono | ESP32-S3 | 3.97" 480×800 | 61 × 101 × 7.95 | 74.7 g | 1150 mAh | White | Yes | Official | $65 |
-| M5Stack PaperMono Lite | ESP32-S3 | 3.97" 480×800 | 61 × 101 × 7.95 | 72.4 g | 1150 mAh | White | Yes | Official | $55 |
+| M5Stack PaperMono Lite | ESP32-S3 | 3.97" 480×800 | 61 × 101 × 8 | 72.4 g | 1150 mAh | White | Yes | Official | $55 |
 | M5Stack M5Paper v1.1 | ESP32 | 4.7" 540×960 | 67 × 118.6 × 10 | 81.6 g | 1150 mAh | No | Yes | Official | $85 |
 | EEGO A4 | ESP32-S3 | 3.98" 552×768 | 68.5 × 98.5 × 8 | 84 g | 2000 mAh (rated) | Warm/cool | Yes | Official | $86 |
 | EEGO A4 Lite | ESP32-S3 | 3.98" 552×768 | 68.5 × 98.5 × 8 | 78 g | 2000 mAh (rated) | No | Yes | Official | $66 |
@@ -54,13 +54,13 @@ A few notes on availability:
 
 ## Data caveats
 
-- **Screen sizes are calculated, not measured.** Each screen's width and height come from its diagonal and resolution. Screens are drawn centered in the body, so bezels are approximate (Xteink devices actually have a larger bottom chin).
+- **Screen sizes are calculated, not measured.** Each screen's width and height come from its diagonal and resolution. Screens are drawn centered in the body, so bezels are approximate (Xteink devices actually have a larger bottom chin). The exception is the PaperMono Lite, whose screen size (50.84 × 86.4 mm) and position come from M5Stack's drawing.
 - **Screen-to-body ratio** uses the front footprint only.
 - **Original X4 RAM** is about 400 KB. Xteink's early "128 MB" claim was wrong.
 - **Button counts** are physical keys, and a rocker counts as two, so the Boox Picco's rocker, function switch, and power key add up to 4. The X4 Classic and X3 counts are inferred from a review, not from a key-by-key spec. The PaperMono count (shown as "5?") is unconfirmed. The LilyGo's user key is treated as the Home button CrossPoint lists.
 - **LilyGo dimensions** come from the T5 S3 Pro wiki. LilyGo says the Lite shares the Pro's design, minus LoRa and GPS. Its weight and white front light come from CrossPoint's device list.
 - **Gyro and RTC** follow CrossPoint's device list. The original X4 has neither, the Metalio has an RTC but no gyro, and the S4 has both.
-- **Lite models** are drawn with their full model's body. In CrossPoint's list, the EEGO A4 Lite differs from the A4 only in weight and front light, and the PaperMono Lite is lighter than the PaperMono and has no LoRa or NFC.
+- **Lite models:** the EEGO A4 Lite is drawn with the A4's body. The PaperMono Lite uses M5Stack's drawing (61 × 101 × 8 mm, with an 8.7 mm bottom chin). In CrossPoint's list, the EEGO A4 Lite differs from the A4 only in weight and front light, and the PaperMono Lite is lighter than the PaperMono and has no LoRa or NFC.
 - **EEGO A4 screen** is 3.98", per CrossPoint's device list.
 - **M5Paper v1.1** dimensions come from M5Stack's drawing (67 × 118.6 × 10 mm). Its weight is CrossPoint's 81.6 g; M5Stack's spec sheet says 86 g.
 - **EEGO battery** is the maker's rated figure and hasn't been independently verified.
@@ -92,6 +92,7 @@ All device data is in the `devs` array near the top of the `<script>` in `index.
 | `on` | Whether the device is shown when the page loads |
 | `w`, `h`, `t` | Body width, height, and depth in mm |
 | `sw`, `sh` | Screen width and height in mm |
+| `sy` | Optional: screen's distance from the top of the body in mm. Without it, the screen is centered. |
 | `diag`, `res`, `ppi`, `g` | Diagonal, resolution, PPI, and weight (as display strings) |
 | `chip`, `ram`, `bat`, `chg`, `btn` | Chip, RAM, battery (mAh, a number), charging, and buttons |
 | `fl`, `tch`, `mag`, `cp`, `gy`, `rtc` | Front light, touch, magnet, CrossPoint, gyro, and RTC tags |
