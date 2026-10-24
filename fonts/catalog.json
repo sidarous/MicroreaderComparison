@@ -1,0 +1,1192 @@
+{
+ "firmware": "2.0.0rc",
+ "release": "sd-fonts-m1-b4",
+ "releaseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4",
+ "scriptLabels": {
+  "latin": "Latin",
+  "cyrillic": "Cyrillic",
+  "greek": "Greek",
+  "hebrew": "Hebrew",
+  "arabic": "Arabic",
+  "georgian": "Georgian",
+  "armenian": "Armenian",
+  "ethiopic": "Ethiopic",
+  "cjk": "CJK",
+  "hangul": "Korean",
+  "cherokee": "Cherokee",
+  "tifinagh": "Tifinagh"
+ },
+ "families": [
+  {
+   "name": "NotoSans",
+   "builtin": true,
+   "category": "Built in",
+   "description": "Default reader font, built into the firmware (Latin, Cyrillic, Vietnamese)",
+   "scripts": [
+    "latin",
+    "cyrillic"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/NotoSans/NotoSans_12.cpfont.gz",
+     "gzBytes": 157142
+    },
+    {
+     "size": 14,
+     "path": "fonts/NotoSans/NotoSans_14.cpfont.gz",
+     "gzBytes": 187576
+    },
+    {
+     "size": 16,
+     "path": "fonts/NotoSans/NotoSans_16.cpfont.gz",
+     "gzBytes": 209779
+    },
+    {
+     "size": 18,
+     "path": "fonts/NotoSans/NotoSans_18.cpfont.gz",
+     "gzBytes": 241710
+    }
+   ],
+   "source": "https://github.com/notofonts/latin-greek-cyrillic"
+  },
+  {
+   "name": "Alegreya",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Calligraphic serif/display (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Alegreya/Alegreya_12.cpfont.gz",
+     "gzBytes": 289438,
+     "file": "Alegreya_12.cpfont",
+     "bytes": 644711,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Alegreya_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Alegreya/Alegreya_14.cpfont.gz",
+     "gzBytes": 347663,
+     "file": "Alegreya_14.cpfont",
+     "bytes": 807997,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Alegreya_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Alegreya/Alegreya_16.cpfont.gz",
+     "gzBytes": 399791,
+     "file": "Alegreya_16.cpfont",
+     "bytes": 993384,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Alegreya_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Alegreya/Alegreya_18.cpfont.gz",
+     "gzBytes": 453745,
+     "file": "Alegreya_18.cpfont",
+     "bytes": 1205180,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Alegreya_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/alegreya/Alegreya%5Bwght%5D.ttf"
+  },
+  {
+   "name": "AtkinsonHyperlegibleNext",
+   "builtin": false,
+   "category": "Accessibility",
+   "description": "Accessibility font for low vision (Latin)",
+   "scripts": [
+    "latin"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/AtkinsonHyperlegibleNext/AtkinsonHyperlegibleNext_12.cpfont.gz",
+     "gzBytes": 177524,
+     "file": "AtkinsonHyperlegibleNext_12.cpfont",
+     "bytes": 424666,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/AtkinsonHyperlegibleNext_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/AtkinsonHyperlegibleNext/AtkinsonHyperlegibleNext_14.cpfont.gz",
+     "gzBytes": 208022,
+     "file": "AtkinsonHyperlegibleNext_14.cpfont",
+     "bytes": 530798,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/AtkinsonHyperlegibleNext_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/AtkinsonHyperlegibleNext/AtkinsonHyperlegibleNext_16.cpfont.gz",
+     "gzBytes": 235353,
+     "file": "AtkinsonHyperlegibleNext_16.cpfont",
+     "bytes": 645355,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/AtkinsonHyperlegibleNext_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/AtkinsonHyperlegibleNext/AtkinsonHyperlegibleNext_18.cpfont.gz",
+     "gzBytes": 268381,
+     "file": "AtkinsonHyperlegibleNext_18.cpfont",
+     "bytes": 781971,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/AtkinsonHyperlegibleNext_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/googlefonts/atkinson-hyperlegible-next/main/fonts/ttf/AtkinsonHyperlegibleNext-Regular.ttf"
+  },
+  {
+   "name": "Bitter",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Slab serif designed for e-ink (Latin, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Bitter/Bitter_12.cpfont.gz",
+     "gzBytes": 266682,
+     "file": "Bitter_12.cpfont",
+     "bytes": 616413,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Bitter_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Bitter/Bitter_14.cpfont.gz",
+     "gzBytes": 310625,
+     "file": "Bitter_14.cpfont",
+     "bytes": 766524,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Bitter_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Bitter/Bitter_16.cpfont.gz",
+     "gzBytes": 355493,
+     "file": "Bitter_16.cpfont",
+     "bytes": 933236,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Bitter_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Bitter/Bitter_18.cpfont.gz",
+     "gzBytes": 408617,
+     "file": "Bitter_18.cpfont",
+     "bytes": 1126670,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Bitter_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/Bitter%5Bwght%5D.ttf"
+  },
+  {
+   "name": "Domitian",
+   "builtin": false,
+   "category": "Serif",
+   "description": "A humanist serif for literary reading (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Domitian/Domitian_12.cpfont.gz",
+     "gzBytes": 278892,
+     "file": "Domitian_12.cpfont",
+     "bytes": 711831,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Domitian_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Domitian/Domitian_14.cpfont.gz",
+     "gzBytes": 331333,
+     "file": "Domitian_14.cpfont",
+     "bytes": 889898,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Domitian_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Domitian/Domitian_16.cpfont.gz",
+     "gzBytes": 375930,
+     "file": "Domitian_16.cpfont",
+     "bytes": 1088038,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Domitian_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Domitian/Domitian_18.cpfont.gz",
+     "gzBytes": 430550,
+     "file": "Domitian_18.cpfont",
+     "bytes": 1316360,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Domitian_18.cpfont"
+    }
+   ],
+   "source": "https://mirrors.ctan.org/fonts/domitian/opentype/Domitian-Roman.otf"
+  },
+  {
+   "name": "GentiumBookPlus",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Scholarly serif with wide Unicode coverage (Latin, Greek, Cyrillic, IPA)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/GentiumBookPlus/GentiumBookPlus_12.cpfont.gz",
+     "gzBytes": 270884,
+     "file": "GentiumBookPlus_12.cpfont",
+     "bytes": 625719,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/GentiumBookPlus_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/GentiumBookPlus/GentiumBookPlus_14.cpfont.gz",
+     "gzBytes": 318066,
+     "file": "GentiumBookPlus_14.cpfont",
+     "bytes": 779107,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/GentiumBookPlus_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/GentiumBookPlus/GentiumBookPlus_16.cpfont.gz",
+     "gzBytes": 372103,
+     "file": "GentiumBookPlus_16.cpfont",
+     "bytes": 965681,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/GentiumBookPlus_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/GentiumBookPlus/GentiumBookPlus_18.cpfont.gz",
+     "gzBytes": 436928,
+     "file": "GentiumBookPlus_18.cpfont",
+     "bytes": 1186883,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/GentiumBookPlus_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/gentiumbookplus/GentiumBookPlus-Regular.ttf"
+  },
+  {
+   "name": "IBMPlexMono",
+   "builtin": false,
+   "category": "Monospace",
+   "description": "Monospace for code and technical reading (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/IBMPlexMono/IBMPlexMono_12.cpfont.gz",
+     "gzBytes": 250766,
+     "file": "IBMPlexMono_12.cpfont",
+     "bytes": 623206,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexMono_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/IBMPlexMono/IBMPlexMono_14.cpfont.gz",
+     "gzBytes": 298269,
+     "file": "IBMPlexMono_14.cpfont",
+     "bytes": 796332,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexMono_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/IBMPlexMono/IBMPlexMono_16.cpfont.gz",
+     "gzBytes": 336598,
+     "file": "IBMPlexMono_16.cpfont",
+     "bytes": 989081,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexMono_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/IBMPlexMono/IBMPlexMono_18.cpfont.gz",
+     "gzBytes": 401377,
+     "file": "IBMPlexMono_18.cpfont",
+     "bytes": 1233761,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexMono_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexmono/IBMPlexMono-Regular.ttf"
+  },
+  {
+   "name": "IBMPlexSans",
+   "builtin": false,
+   "category": "Sans-serif",
+   "description": "IBM corporate sans-serif (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/IBMPlexSans/IBMPlexSans_12.cpfont.gz",
+     "gzBytes": 301054,
+     "file": "IBMPlexSans_12.cpfont",
+     "bytes": 782722,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexSans_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/IBMPlexSans/IBMPlexSans_14.cpfont.gz",
+     "gzBytes": 350279,
+     "file": "IBMPlexSans_14.cpfont",
+     "bytes": 954290,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexSans_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/IBMPlexSans/IBMPlexSans_16.cpfont.gz",
+     "gzBytes": 393649,
+     "file": "IBMPlexSans_16.cpfont",
+     "bytes": 1149217,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexSans_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/IBMPlexSans/IBMPlexSans_18.cpfont.gz",
+     "gzBytes": 454302,
+     "file": "IBMPlexSans_18.cpfont",
+     "bytes": 1403311,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexSans_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/IBM/plex/master/packages/plex-sans/fonts/complete/ttf/IBMPlexSans-Regular.ttf"
+  },
+  {
+   "name": "IBMPlexSerif",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Professional serif (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/IBMPlexSerif/IBMPlexSerif_12.cpfont.gz",
+     "gzBytes": 299419,
+     "file": "IBMPlexSerif_12.cpfont",
+     "bytes": 732651,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexSerif_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/IBMPlexSerif/IBMPlexSerif_14.cpfont.gz",
+     "gzBytes": 348292,
+     "file": "IBMPlexSerif_14.cpfont",
+     "bytes": 911847,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexSerif_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/IBMPlexSerif/IBMPlexSerif_16.cpfont.gz",
+     "gzBytes": 392430,
+     "file": "IBMPlexSerif_16.cpfont",
+     "bytes": 1112591,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexSerif_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/IBMPlexSerif/IBMPlexSerif_18.cpfont.gz",
+     "gzBytes": 458555,
+     "file": "IBMPlexSerif_18.cpfont",
+     "bytes": 1367504,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/IBMPlexSerif_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexserif/IBMPlexSerif-Regular.ttf"
+  },
+  {
+   "name": "Inter",
+   "builtin": false,
+   "category": "Sans-serif",
+   "description": "Modern sans-serif (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Inter/Inter_12.cpfont.gz",
+     "gzBytes": 296144,
+     "file": "Inter_12.cpfont",
+     "bytes": 823606,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Inter_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Inter/Inter_14.cpfont.gz",
+     "gzBytes": 339969,
+     "file": "Inter_14.cpfont",
+     "bytes": 1011353,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Inter_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Inter/Inter_16.cpfont.gz",
+     "gzBytes": 396163,
+     "file": "Inter_16.cpfont",
+     "bytes": 1231658,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Inter_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Inter/Inter_18.cpfont.gz",
+     "gzBytes": 443464,
+     "file": "Inter_18.cpfont",
+     "bytes": 1477010,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Inter_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf"
+  },
+  {
+   "name": "LexicaUltralegible",
+   "builtin": false,
+   "category": "Accessibility",
+   "description": "Accessibility font for low vision / dyslexia (Latin)",
+   "scripts": [
+    "latin"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/LexicaUltralegible/LexicaUltralegible_12.cpfont.gz",
+     "gzBytes": 178542,
+     "file": "LexicaUltralegible_12.cpfont",
+     "bytes": 403078,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/LexicaUltralegible_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/LexicaUltralegible/LexicaUltralegible_14.cpfont.gz",
+     "gzBytes": 211865,
+     "file": "LexicaUltralegible_14.cpfont",
+     "bytes": 509082,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/LexicaUltralegible_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/LexicaUltralegible/LexicaUltralegible_16.cpfont.gz",
+     "gzBytes": 240220,
+     "file": "LexicaUltralegible_16.cpfont",
+     "bytes": 625218,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/LexicaUltralegible_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/LexicaUltralegible/LexicaUltralegible_18.cpfont.gz",
+     "gzBytes": 274063,
+     "file": "LexicaUltralegible_18.cpfont",
+     "bytes": 757922,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/LexicaUltralegible_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/jacobxperez/lexica-ultralegible/main/fonts/ttf/LexicaUltralegible-Regular.ttf"
+  },
+  {
+   "name": "LibreBaskerville",
+   "builtin": false,
+   "category": "Serif",
+   "description": "A serif reimplementing the classic Baskerville (Latin)",
+   "scripts": [
+    "latin"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/LibreBaskerville/LibreBaskerville_12.cpfont.gz",
+     "gzBytes": 205382,
+     "file": "LibreBaskerville_12.cpfont",
+     "bytes": 528258,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/LibreBaskerville_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/LibreBaskerville/LibreBaskerville_14.cpfont.gz",
+     "gzBytes": 244508,
+     "file": "LibreBaskerville_14.cpfont",
+     "bytes": 653378,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/LibreBaskerville_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/LibreBaskerville/LibreBaskerville_16.cpfont.gz",
+     "gzBytes": 282846,
+     "file": "LibreBaskerville_16.cpfont",
+     "bytes": 794727,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/LibreBaskerville_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/LibreBaskerville/LibreBaskerville_18.cpfont.gz",
+     "gzBytes": 335053,
+     "file": "LibreBaskerville_18.cpfont",
+     "bytes": 994388,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/LibreBaskerville_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/impallari/Libre-Baskerville/master/fonts/ttf/LibreBaskerville-Regular.ttf"
+  },
+  {
+   "name": "Libron",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Serif optimized for digital reading and e-readers (Latin)",
+   "scripts": [
+    "latin"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Libron/Libron_12.cpfont.gz",
+     "gzBytes": 200268,
+     "file": "Libron_12.cpfont",
+     "bytes": 516151,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Libron_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Libron/Libron_14.cpfont.gz",
+     "gzBytes": 237510,
+     "file": "Libron_14.cpfont",
+     "bytes": 623218,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Libron_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Libron/Libron_16.cpfont.gz",
+     "gzBytes": 265155,
+     "file": "Libron_16.cpfont",
+     "bytes": 742026,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Libron_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Libron/Libron_18.cpfont.gz",
+     "gzBytes": 315996,
+     "file": "Libron_18.cpfont",
+     "bytes": 916650,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Libron_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/nicoverbruggen/ebook-fonts/main/fonts/core/Libron-Regular.ttf"
+  },
+  {
+   "name": "Literata",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Screen-optimized serif (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Literata/Literata_12.cpfont.gz",
+     "gzBytes": 319728,
+     "file": "Literata_12.cpfont",
+     "bytes": 849221,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Literata_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Literata/Literata_14.cpfont.gz",
+     "gzBytes": 373921,
+     "file": "Literata_14.cpfont",
+     "bytes": 1032226,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Literata_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Literata/Literata_16.cpfont.gz",
+     "gzBytes": 423358,
+     "file": "Literata_16.cpfont",
+     "bytes": 1238827,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Literata_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Literata/Literata_18.cpfont.gz",
+     "gzBytes": 500107,
+     "file": "Literata_18.cpfont",
+     "bytes": 1536569,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Literata_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/googlefonts/literata/main/fonts/ttf/Literata-Regular.ttf"
+  },
+  {
+   "name": "Lora",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Calligraphic serif for literary reading (Latin, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Lora/Lora_12.cpfont.gz",
+     "gzBytes": 243410,
+     "file": "Lora_12.cpfont",
+     "bytes": 557582,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Lora_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Lora/Lora_14.cpfont.gz",
+     "gzBytes": 283434,
+     "file": "Lora_14.cpfont",
+     "bytes": 696371,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Lora_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Lora/Lora_16.cpfont.gz",
+     "gzBytes": 326964,
+     "file": "Lora_16.cpfont",
+     "bytes": 857926,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Lora_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Lora/Lora_18.cpfont.gz",
+     "gzBytes": 390943,
+     "file": "Lora_18.cpfont",
+     "bytes": 1067549,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Lora_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/cyrealtype/Lora-Cyrillic/main/fonts/ttf/Lora-Regular.ttf"
+  },
+  {
+   "name": "Merriweather",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Warm serif for long-form reading (Latin, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Merriweather/Merriweather_12.cpfont.gz",
+     "gzBytes": 272529,
+     "file": "Merriweather_12.cpfont",
+     "bytes": 668338,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Merriweather_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Merriweather/Merriweather_14.cpfont.gz",
+     "gzBytes": 320340,
+     "file": "Merriweather_14.cpfont",
+     "bytes": 824318,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Merriweather_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Merriweather/Merriweather_16.cpfont.gz",
+     "gzBytes": 366016,
+     "file": "Merriweather_16.cpfont",
+     "bytes": 1003171,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Merriweather_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Merriweather/Merriweather_18.cpfont.gz",
+     "gzBytes": 425097,
+     "file": "Merriweather_18.cpfont",
+     "bytes": 1206239,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Merriweather_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/SorkinType/Merriweather/master/fonts/ttf/Merriweather-Regular.ttf"
+  },
+  {
+   "name": "NotoSansExtended",
+   "builtin": false,
+   "category": "Sans-serif",
+   "description": "Sans-serif (Latin, Greek, Cyrillic, Georgian, Armenian, Ethiopic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek",
+    "georgian",
+    "armenian",
+    "ethiopic"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/NotoSansExtended/NotoSansExtended_12.cpfont.gz",
+     "gzBytes": 282905,
+     "file": "NotoSansExtended_12.cpfont",
+     "bytes": 726499,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/NotoSansExtended_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/NotoSansExtended/NotoSansExtended_14.cpfont.gz",
+     "gzBytes": 336947,
+     "file": "NotoSansExtended_14.cpfont",
+     "bytes": 916505,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/NotoSansExtended_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/NotoSansExtended/NotoSansExtended_16.cpfont.gz",
+     "gzBytes": 381760,
+     "file": "NotoSansExtended_16.cpfont",
+     "bytes": 1130245,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/NotoSansExtended_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/NotoSansExtended/NotoSansExtended_18.cpfont.gz",
+     "gzBytes": 438883,
+     "file": "NotoSansExtended_18.cpfont",
+     "bytes": 1370647,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/NotoSansExtended_18.cpfont"
+    }
+   ],
+   "source": null
+  },
+  {
+   "name": "NotoSerifExtended",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Serif (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/NotoSerifExtended/NotoSerifExtended_12.cpfont.gz",
+     "gzBytes": 296897,
+     "file": "NotoSerifExtended_12.cpfont",
+     "bytes": 746588,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/NotoSerifExtended_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/NotoSerifExtended/NotoSerifExtended_14.cpfont.gz",
+     "gzBytes": 348689,
+     "file": "NotoSerifExtended_14.cpfont",
+     "bytes": 935507,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/NotoSerifExtended_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/NotoSerifExtended/NotoSerifExtended_16.cpfont.gz",
+     "gzBytes": 406168,
+     "file": "NotoSerifExtended_16.cpfont",
+     "bytes": 1148193,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/NotoSerifExtended_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/NotoSerifExtended/NotoSerifExtended_18.cpfont.gz",
+     "gzBytes": 479006,
+     "file": "NotoSerifExtended_18.cpfont",
+     "bytes": 1429912,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/NotoSerifExtended_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/notofonts/NotoSerif/main/fonts/ttf/unhinted/instance_ttf/NotoSerif-Regular.ttf"
+  },
+  {
+   "name": "OpenDyslexic",
+   "builtin": false,
+   "category": "Dyslexia",
+   "description": "Dyslexia-friendly font (Latin)",
+   "scripts": [
+    "latin"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 8,
+     "path": "fonts/OpenDyslexic/OpenDyslexic_8.cpfont.gz",
+     "gzBytes": 147363,
+     "file": "OpenDyslexic_8.cpfont",
+     "bytes": 313553,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/OpenDyslexic_8.cpfont"
+    },
+    {
+     "size": 10,
+     "path": "fonts/OpenDyslexic/OpenDyslexic_10.cpfont.gz",
+     "gzBytes": 188305,
+     "file": "OpenDyslexic_10.cpfont",
+     "bytes": 424568,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/OpenDyslexic_10.cpfont"
+    },
+    {
+     "size": 12,
+     "path": "fonts/OpenDyslexic/OpenDyslexic_12.cpfont.gz",
+     "gzBytes": 228713,
+     "file": "OpenDyslexic_12.cpfont",
+     "bytes": 557151,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/OpenDyslexic_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/OpenDyslexic/OpenDyslexic_14.cpfont.gz",
+     "gzBytes": 277695,
+     "file": "OpenDyslexic_14.cpfont",
+     "bytes": 712561,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/OpenDyslexic_14.cpfont"
+    }
+   ],
+   "source": null
+  },
+  {
+   "name": "SourceCodePro",
+   "builtin": false,
+   "category": "Monospace",
+   "description": "Adobe monospace with excellent hinting (Latin)",
+   "scripts": [
+    "latin"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/SourceCodePro/SourceCodePro_12.cpfont.gz",
+     "gzBytes": 158878,
+     "file": "SourceCodePro_12.cpfont",
+     "bytes": 375554,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceCodePro_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/SourceCodePro/SourceCodePro_14.cpfont.gz",
+     "gzBytes": 190657,
+     "file": "SourceCodePro_14.cpfont",
+     "bytes": 476418,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceCodePro_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/SourceCodePro/SourceCodePro_16.cpfont.gz",
+     "gzBytes": 217147,
+     "file": "SourceCodePro_16.cpfont",
+     "bytes": 587976,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceCodePro_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/SourceCodePro/SourceCodePro_18.cpfont.gz",
+     "gzBytes": 257480,
+     "file": "SourceCodePro_18.cpfont",
+     "bytes": 719803,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceCodePro_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/adobe-fonts/source-code-pro/release/TTF/SourceCodePro-Regular.ttf"
+  },
+  {
+   "name": "SourceSans3",
+   "builtin": false,
+   "category": "Sans-serif",
+   "description": "Adobe humanist sans-serif (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/SourceSans3/SourceSans3_12.cpfont.gz",
+     "gzBytes": 295585,
+     "file": "SourceSans3_12.cpfont",
+     "bytes": 722493,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceSans3_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/SourceSans3/SourceSans3_14.cpfont.gz",
+     "gzBytes": 343907,
+     "file": "SourceSans3_14.cpfont",
+     "bytes": 877834,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceSans3_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/SourceSans3/SourceSans3_16.cpfont.gz",
+     "gzBytes": 392075,
+     "file": "SourceSans3_16.cpfont",
+     "bytes": 1057001,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceSans3_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/SourceSans3/SourceSans3_18.cpfont.gz",
+     "gzBytes": 449053,
+     "file": "SourceSans3_18.cpfont",
+     "bytes": 1262428,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceSans3_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/adobe-fonts/source-sans/release/TTF/SourceSans3-Regular.ttf"
+  },
+  {
+   "name": "SourceSerif4",
+   "builtin": false,
+   "category": "Serif",
+   "description": "Adobe transitional serif (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/SourceSerif4/SourceSerif4_12.cpfont.gz",
+     "gzBytes": 304553,
+     "file": "SourceSerif4_12.cpfont",
+     "bytes": 740300,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceSerif4_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/SourceSerif4/SourceSerif4_14.cpfont.gz",
+     "gzBytes": 363604,
+     "file": "SourceSerif4_14.cpfont",
+     "bytes": 917505,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceSerif4_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/SourceSerif4/SourceSerif4_16.cpfont.gz",
+     "gzBytes": 409237,
+     "file": "SourceSerif4_16.cpfont",
+     "bytes": 1115598,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceSerif4_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/SourceSerif4/SourceSerif4_18.cpfont.gz",
+     "gzBytes": 466813,
+     "file": "SourceSerif4_18.cpfont",
+     "bytes": 1344862,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/SourceSerif4_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/adobe-fonts/source-serif/release/TTF/SourceSerif4-Regular.ttf"
+  },
+  {
+   "name": "Vollkorn",
+   "builtin": false,
+   "category": "Serif",
+   "description": "A serif for bread and butter use by Friedrich Althausen (Latin, Greek, Cyrillic)",
+   "scripts": [
+    "latin",
+    "cyrillic",
+    "greek"
+   ],
+   "styles": [
+    "regular",
+    "bold",
+    "italic",
+    "bolditalic"
+   ],
+   "sizes": [
+    {
+     "size": 12,
+     "path": "fonts/Vollkorn/Vollkorn_12.cpfont.gz",
+     "gzBytes": 297229,
+     "file": "Vollkorn_12.cpfont",
+     "bytes": 783728,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Vollkorn_12.cpfont"
+    },
+    {
+     "size": 14,
+     "path": "fonts/Vollkorn/Vollkorn_14.cpfont.gz",
+     "gzBytes": 352099,
+     "file": "Vollkorn_14.cpfont",
+     "bytes": 959840,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Vollkorn_14.cpfont"
+    },
+    {
+     "size": 16,
+     "path": "fonts/Vollkorn/Vollkorn_16.cpfont.gz",
+     "gzBytes": 401976,
+     "file": "Vollkorn_16.cpfont",
+     "bytes": 1160696,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Vollkorn_16.cpfont"
+    },
+    {
+     "size": 18,
+     "path": "fonts/Vollkorn/Vollkorn_18.cpfont.gz",
+     "gzBytes": 462299,
+     "file": "Vollkorn_18.cpfont",
+     "bytes": 1392482,
+     "url": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/download/sd-fonts-m1-b4/Vollkorn_18.cpfont"
+    }
+   ],
+   "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/vollkorn/Vollkorn%5Bwght%5D.ttf"
+  }
+ ]
+}

@@ -2,7 +2,12 @@
 
 An interactive, to-scale comparison of thirteen pocket E Ink readers built on ESP32 microcontrollers, plus the Android-based Xteink S4 for reference.
 
-**View it live:** https://mark.sidarous.net/MicroreaderComparison/
+It also has a **font browser** that previews every Latin, Cyrillic and Greek font CrossPoint 2.0 can use on an Xteink X4 screen.
+
+**View it live:**
+
+- Size comparison: https://mark.sidarous.net/MicroreaderComparison/
+- Font browser: https://mark.sidarous.net/MicroreaderComparison/fonts.html
 
 ## What's a micro e-reader?
 
@@ -10,7 +15,7 @@ An interactive, to-scale comparison of thirteen pocket E Ink readers built on ES
 
 The **Xteink S4** is the exception. It's the same size class as the X4, but it runs Android, so it's on the page as a point of comparison. On the page, its name is marked "(Android)" and its outline is dotted.
 
-## What the page does
+## Size comparison (`index.html`)
 
 - **To-scale outlines** of each device, with the screen area shaded inside the body.
 - **Three layouts:** superimposed and centered, superimposed and bottom-aligned, or side by side.
@@ -21,6 +26,40 @@ The **Xteink S4** is the exception. It's the same size class as the X4, but it r
 - **Lite models** (EEGO A4 Lite, PaperMono Lite) share their full model's color and are drawn with dashed outlines.
 
 Everything is in one file, `index.html`, with no build step. The only outside request is the IBM Plex Sans font from Google Fonts, and the page falls back to system fonts without it.
+
+## Font browser (`fonts.html`)
+
+Browse the fonts in CrossPoint 2.0 RC and see each one on an Xteink X4 screen, drawn the way the reader draws it.
+
+- **Fonts:** the built-in Noto Sans plus the 22 downloadable families that cover Latin, Cyrillic or Greek. The Hebrew, Arabic and Korean families are left out.
+- **Real glyphs:** the page uses the same `.cpfont` files the reader downloads, with their kerning, ligatures and 4-level grey anti-aliasing. The built-in Noto Sans is converted from the firmware's own font data.
+- **Real layout:** line breaking, justification, indents, paragraph spacing, page breaks and the status bar are ported from CrossPoint's code. The line layout was checked against the firmware's own layout code (`ParsedText`), compiled and fed the same font metrics: across ten font, size and setting combinations (about 2,000 lines), every line break and word position matched.
+- **Reader settings:** font size, line spacing, alignment, screen margin, paragraph indent, word and character spacing, extra paragraph spacing, and text anti-aliasing. The defaults match a fresh install.
+- **Sample text:** three presets, or type your own. Each line is a paragraph, with `*italic*` and `**bold**` markup. Page through it as on the reader.
+- **Compare two fonts** side by side.
+- **Download info:** each font's sizes and file sizes, direct `.cpfont` links, and the three ways to install it.
+
+Not simulated: hyphenation, Focus Reading, a book's own styles, and right-to-left or CJK text. Characters a font doesn't include show as a replacement box, as on the reader.
+
+The page loads its font files over the network, so it has to be served by a web server such as GitHub Pages. Opened straight from disk, the browser blocks the downloads.
+
+### Font data
+
+The `fonts/` folder holds the font data, gzipped (about 29 MB):
+
+- `fonts/catalog.json`: names, descriptions, scripts, sizes and download links.
+- `fonts/<Family>/<Family>_<size>.cpfont.gz`: the files from the [crosspoint-fonts `sd-fonts-m1-b4` release](https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4), unchanged apart from gzip.
+- `fonts/NotoSans/`: the built-in reader font, converted from the firmware's C headers to `.cpfont`.
+- `fonts/ui/Small_8.cpfont.gz`: the status-bar font.
+
+To rebuild it, for example after a new font release, check out the firmware at the matching tag and run the build script (it needs PyYAML):
+
+```
+git clone --depth 1 --branch 2.0.0rc https://github.com/crosspoint-reader/crosspoint-reader
+python3 tools/build_font_data.py --firmware crosspoint-reader
+```
+
+The release and firmware tag are set at the top of `tools/build_font_data.py`. The fonts keep their own licenses, mostly the SIL Open Font License; each font's info panel links to its source.
 
 ## Devices
 

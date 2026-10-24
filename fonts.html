@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrossPoint font browser</title>
+<meta name="description" content="Browse the fonts available in CrossPoint 2.0 and preview them on an Xteink X4 screen, rendered from the reader's own font files.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--page:#FFFFFF;--text-primary:#1F2328;--text-secondary:#57606A;--text-muted:#7D8590;--border:#E4E7EB;--border-strong:#D0D7DE;--border-stronger:#AFB8C1;--surface-1:#F4F6F8;--surface-2:#EAEEF2;--bg-success:#E3F4E8;--text-success:#1A7F37;--bg-warning:#FFF3D1;--text-warning:#8A5A00;--accent:#2F6FB3;--accent-soft:#E6F0FA;--device:#2E3135;--device-edge:#1D1F22;--radius:8px}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--page:#16181B;--text-primary:#E6EAEE;--text-secondary:#A2ABB5;--text-muted:#77818C;--border:#2B3138;--border-strong:#3B434C;--border-stronger:#57616C;--surface-1:#1F2328;--surface-2:#272C32;--bg-success:#18351F;--text-success:#5CCB72;--bg-warning:#382B0E;--text-warning:#E2B547;--accent:#6CA8E8;--accent-soft:#1B2B3D;--device:#3A3E44;--device-edge:#4A4F56}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:var(--accent)}
+main{max-width:1240px;margin:0 auto;padding:24px 16px 48px}
+.crumb{font-size:13px;margin:0 0 8px}
+h1{font-size:22px;font-weight:500;margin:0 0 4px}
+h2{font-size:15px;font-weight:500;margin:0 0 10px}
+.lede{color:var(--text-secondary);font-size:15px;margin:0 0 20px;max-width:760px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+button,select,input,textarea{font:inherit;color:inherit}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,.font-item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.layout{display:grid;gap:20px;grid-template-columns:minmax(0,1fr);grid-template-areas:"preview" "list" "side" "info"}
+@media (min-width:760px){.layout{grid-template-columns:260px minmax(0,1fr);grid-template-areas:"list preview" "info preview" "side side"}}
+@media (min-width:1180px){.layout{grid-template-columns:260px minmax(0,1fr) 300px;grid-template-areas:"list preview side" "info preview side"}}
+.list-col{grid-area:list;min-width:0}
+.preview-col{grid-area:preview;min-width:0}
+.side-col{grid-area:side;min-width:0;display:flex;flex-direction:column;gap:20px}
+.info-col{grid-area:info;min-width:0}
+@media (min-width:760px){.preview-inner{position:sticky;top:12px}}
+.card{border:0.5px solid var(--border-strong);border-radius:var(--radius);padding:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{padding:3px 10px;border:0.5px solid var(--border-strong);border-radius:999px;background:transparent;font-size:13px;color:var(--text-secondary);cursor:pointer}
+.chip[aria-pressed="true"]{color:var(--text-primary);background:var(--surface-2);border-color:var(--border-stronger)}
+.field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--text-secondary)}
+select,input[type=number]{padding:5px 8px;border:0.5px solid var(--border-stronger);border-radius:6px;background:var(--page);font-size:13px;min-width:0}
+.font-list{list-style:none;margin:10px 0 0;padding:0;max-height:min(62vh,640px);overflow-y:auto;border:0.5px solid var(--border-strong);border-radius:var(--radius)}
+@media (max-width:759px){.font-list{max-height:340px}}
+.font-item{display:block;width:100%;text-align:left;padding:9px 12px;border:0;border-bottom:0.5px solid var(--border);background:transparent;cursor:pointer}
+.font-list li:last-child .font-item{border-bottom:0}
+.font-item:hover{background:var(--surface-1)}
+.font-item[aria-current="true"]{background:var(--accent-soft)}
+.fi-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500}
+.fi-desc{display:block;font-size:12px;color:var(--text-secondary)}
+.fi-meta{display:block;font-size:11px;color:var(--text-muted)}
+.badge{display:inline-block;padding:0 6px;border-radius:999px;font-size:11px;font-weight:500;line-height:18px}
+.b-a,.b-b{background:var(--accent);color:var(--page)}
+.b-builtin{background:var(--bg-success);color:var(--text-success)}
+.empty{padding:12px;font-size:13px;color:var(--text-muted)}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-bottom:12px;font-size:13px;color:var(--text-secondary)}
+.seg{display:inline-flex;border:0.5px solid var(--border-stronger);border-radius:6px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:4px 10px;font-size:13px;color:var(--text-secondary);cursor:pointer}
+.seg button+button{border-left:0.5px solid var(--border-stronger)}
+.seg button[aria-pressed="true"]{background:var(--surface-2);color:var(--text-primary)}
+.check{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-primary)}
+.screens{display:flex;flex-wrap:wrap;gap:16px;overflow-x:auto;padding-bottom:4px;--z:0.6}
+.screen-card{flex:none;width:calc(598px*var(--z) + 21px);display:flex;flex-direction:column;gap:8px;border-radius:12px;padding:8px;border:1.5px solid transparent}
+.compare .screen-card.active{border-color:var(--accent)}
+.screen-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px}
+.screen-head select{flex:1 1 0;min-width:0}
+.screen-head .size{flex:0 0 auto}
+.device{position:relative;background:var(--device);border:1px solid var(--device-edge);padding:calc(70px*var(--z)) calc(59px*var(--z)) calc(117px*var(--z));border-radius:calc(40px*var(--z));box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.device canvas{display:block;width:calc(480px*var(--z));height:calc(800px*var(--z));background:#ECEBE6;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);image-rendering:auto}
+.screens.crisp .device canvas{image-rendering:pixelated}
+.loading{position:absolute;left:calc(59px*var(--z));top:calc(70px*var(--z));width:calc(480px*var(--z));height:calc(800px*var(--z));display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-size:13px;color:#3A3A38;background:rgba(236,235,230,.82)}
+.loading[hidden]{display:none}
+.pager{display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:var(--text-secondary)}
+.pager button{width:30px;height:28px;border:0.5px solid var(--border-stronger);border-radius:6px;background:transparent;cursor:pointer}
+.pager button:disabled{opacity:.35;cursor:default}
+.note{font-size:12px;color:var(--text-muted);margin:12px 0 0}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.settings .wide{grid-column:1/-1}
+.range-row{display:flex;align-items:center;gap:8px}
+.range-row input{flex:1}
+.range-row output{min-width:38px;text-align:right;color:var(--text-primary);font-variant-numeric:tabular-nums}
+.btn{padding:5px 12px;border:0.5px solid var(--border-stronger);border-radius:6px;background:transparent;font-size:13px;cursor:pointer}
+textarea{width:100%;min-height:220px;resize:vertical;padding:8px;border:0.5px solid var(--border-stronger);border-radius:6px;background:var(--page);font-size:13px;line-height:1.5}
+.hint{font-size:12px;color:var(--text-muted);margin:6px 0 0}
+.info h2{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.info p{font-size:13px;margin:0 0 10px}
+.info dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13px;margin:0 0 12px}
+.info dt{color:var(--text-secondary)}
+.info dd{margin:0}
+.files{width:100%;border-collapse:collapse;font-size:12px;margin:0 0 12px}
+.files th{text-align:left;font-weight:500;color:var(--text-secondary);padding:4px 4px;border-bottom:0.5px solid var(--border-strong);white-space:nowrap}
+.files td{padding:4px 4px;border-bottom:0.5px solid var(--border);white-space:nowrap}
+.files td a{white-space:normal;overflow-wrap:anywhere}
+.files .num{text-align:right;font-variant-numeric:tabular-nums}
+.info ol{font-size:13px;margin:0 0 10px;padding-left:20px}
+.info li{margin-bottom:4px}
+code{font-size:12px;background:var(--surface-1);padding:1px 4px;border-radius:4px}
+.error{color:var(--text-warning);background:var(--bg-warning);padding:10px 12px;border-radius:var(--radius);font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<p class="crumb"><a href="index.html">← Micro e-reader comparison</a></p>
+<h1>CrossPoint font browser</h1>
+<p class="lede">Every Latin, Cyrillic and Greek font CrossPoint 2.0 RC can use, the built-in Noto Sans plus 22 downloads, drawn on an Xteink X4 screen from the reader's own font files, kerning and line-breaking rules.</p>
+<div id="fatal"></div>
+<div class="layout">
+  <section class="list-col" aria-labelledby="fonts-h">
+    <h2 id="fonts-h">Fonts</h2>
+    <div class="chips" id="catChips" role="group" aria-label="Filter by style"></div>
+    <label class="field">Script
+      <select id="scriptFilter"><option value="">Any script</option></select>
+    </label>
+    <ul class="font-list" id="fontList" aria-label="Font families"></ul>
+  </section>
+
+  <section class="preview-col" aria-label="Preview">
+    <div class="preview-inner">
+      <div class="toolbar">
+        <label class="check"><input type="checkbox" id="compare"> Compare two fonts</label>
+        <span style="display:inline-flex;align-items:center;gap:6px">Zoom
+          <span class="seg" role="group" aria-label="Zoom">
+            <button type="button" data-zoom="fit" aria-pressed="true">Fit</button>
+            <button type="button" data-zoom="1" aria-pressed="false">100%</button>
+            <button type="button" data-zoom="2" aria-pressed="false">200%</button>
+          </span>
+        </span>
+      </div>
+      <div class="screens" id="screens"></div>
+      <p class="note">Screen to scale: 480 × 800 pixels, one canvas pixel per device pixel. The case outline is approximate. Grey levels follow CrossPoint's 2-bit anti-aliasing; the panel's real tones vary with lighting.</p>
+    </div>
+  </section>
+
+  <aside class="side-col">
+    <section class="card" aria-labelledby="settings-h">
+      <h2 id="settings-h">Reader settings</h2>
+      <div class="settings">
+        <label class="field">Line spacing
+          <select id="s-lineSpacing"><option value="0">Tight</option><option value="1">Normal</option><option value="2">Wide</option><option value="3">Extra wide</option></select>
+        </label>
+        <label class="field">Alignment
+          <select id="s-align"><option value="justify">Justified</option><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option><option value="book">Book style</option></select>
+        </label>
+        <label class="field wide">Screen margin
+          <span class="range-row"><input type="range" id="s-margin" min="5" max="40" step="5"><output id="o-margin"></output></span>
+        </label>
+        <label class="field">Paragraph indent
+          <select id="s-indent"><option value="0">None</option><option value="1">1 space</option><option value="2">2 spaces</option><option value="3">3 spaces</option><option value="4">4 spaces</option><option value="5">5 spaces</option></select>
+        </label>
+        <label class="field">Word spacing
+          <select id="s-wordSpacing"></select>
+        </label>
+        <label class="field">Character spacing
+          <select id="s-charSpacing"><option value="-2">−2</option><option value="-1">−1</option><option value="0">0</option><option value="1">+1</option><option value="2">+2</option></select>
+        </label>
+        <span></span>
+        <label class="check wide"><input type="checkbox" id="s-paraSpacing"> Extra paragraph spacing</label>
+        <label class="check wide"><input type="checkbox" id="s-aa"> Text anti-aliasing</label>
+        <div class="wide"><button type="button" class="btn" id="resetSettings">Reset to defaults</button></div>
+      </div>
+      <p class="hint">Defaults match a fresh CrossPoint install. Hyphenation and Focus Reading aren't simulated.</p>
+    </section>
+    <section class="card" aria-labelledby="text-h">
+      <h2 id="text-h">Sample text</h2>
+      <label class="field" style="margin-bottom:8px">Preset
+        <select id="preset"></select>
+      </label>
+      <label class="sr-only" for="sample">Sample text</label>
+      <textarea id="sample" spellcheck="false"></textarea>
+      <p class="hint">One paragraph per line. <code>*italic*</code>, <code>**bold**</code>, <code>***bold italic***</code>; <code>\*</code> for a literal asterisk. Characters a font doesn't include show as a replacement box, as on the reader.</p>
+    </section>
+  </aside>
+
+  <section class="info-col card info" id="info" aria-live="polite"></section>
+</div>
+</main>
+
+<script>
+'use strict';
+
+// ---------------------------------------------------------------------------
+// Constants taken from CrossPoint 2.0.0rc (Xteink X4, portrait, Lyra theme)
+// ---------------------------------------------------------------------------
+const W = 480, H = 800;
+const INSET = {top: 9, right: 3, bottom: 3, left: 3};  // BoardConfig ViewableInsets default (X4)
+const STATUS_BAR_H = 19;                               // Lyra statusBarVerticalMargin, text lane only
+const SB_HMARGIN = 5;                                  // Lyra statusBarHorizontalMargin
+const BATTERY = {w: 16, h: 12, gap: 4};                // Lyra batteryWidth/Height, batteryPercentSpacing
+const MAX_CARRIED_LINES = 6;
+const REPLACEMENT = 0xFFFD;
+const LINE_MULT = {builtin: [0.90, 0.95, 1.0, 1.05], sd: [0.95, 1.0, 1.3, 1.6]};  // getReaderLineCompression
+const DEFAULTS = {lineSpacing: 1, align: 'justify', margin: 5, indent: 2, wordSpacing: 100, charSpacing: 0, paraSpacing: true, aa: true};
+const STYLE_NAMES = ['Regular', 'Bold', 'Italic', 'Bold italic'];
+// Screen tones for white, light grey, dark grey, black
+const PALETTE = [[236, 235, 230], [172, 171, 167], [104, 103, 100], [30, 30, 30]];
+
+const PRESETS = [
+  {name: 'Fiction (Alice in Wonderland)', title: 'Down the Rabbit-Hole', text: [
+    'Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, “and what is the use of a book,” thought Alice “without pictures or conversations?”',
+    'So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.',
+    'There was nothing so *very* remarkable in that; nor did Alice think it so *very* much out of the way to hear the Rabbit say to itself, “Oh dear! Oh dear! I shall be late!” (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually *took a watch out of its waistcoat-pocket*, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.',
+    'In another moment down went Alice after it, never once considering how in the world she was to get out again.',
+    'The rabbit-hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.',
+  ]},
+  {name: 'Character test', title: 'Character test', text: [
+    'The quick brown fox jumps over the lazy dog. 0123456789',
+    '**Bold:** Pack my box with five dozen liquor jugs.',
+    '*Italic:* Sphinx of black quartz, judge my vow.',
+    '***Bold italic:*** How vexingly quick daft zebras jump!',
+    'Ligatures and kerning: office, affluent, flourish, AVATAR, Tomorrow, Wolf, “double” and ‘single’ quotes — dashes – and an ellipsis…',
+    'Accents: Café, naïve, façade, Ångström, Łódź, Zürich, São Paulo, Dvořák, Tiếng Việt.',
+    'Symbols: (parentheses) [brackets] {braces} € £ ¥ § ¶ © ® ™ ½ ¾ ± × ÷',
+  ]},
+  {name: 'Cyrillic and Greek', title: 'Cyrillic and Greek', text: [
+    'Съешь же ещё этих мягких французских булок, да выпей чаю.',
+    'В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!',
+    '*Широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства.*',
+    'Ξεσκεπάζω την ψυχοφθόρα βδελυγμία.',
+    'Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός.',
+    '**Γαζέες καὶ μυρτιὲς δὲν θὰ βρῶ πιὰ στὸ χρυσαφὶ ξέφωτο.**',
+  ]},
+];
+
+// ---------------------------------------------------------------------------
+// .cpfont v4 reader (lib/EpdFont/scripts/fontconvert_sdcard.py layout)
+// ---------------------------------------------------------------------------
+class CpFont {
+  constructor(buf, builtin) {
+    const u8 = new Uint8Array(buf), dv = new DataView(buf);
+    if (String.fromCharCode(...u8.subarray(0, 6)) !== 'CPFONT' || dv.getUint16(8, true) !== 4) {
+      throw new Error('not a version 4 .cpfont file');
+    }
+    this.u8 = u8;
+    this.dv = dv;
+    this.builtin = builtin;
+    this.styles = [];
+    for (let i = 0; i < u8[12]; i++) {
+      const o = 32 + 32 * i;
+      const s = {
+        ic: dv.getUint32(o + 4, true), gc: dv.getUint32(o + 8, true), advanceY: u8[o + 12],
+        ascender: dv.getInt16(o + 13, true), descender: dv.getInt16(o + 15, true),
+        kl: dv.getUint16(o + 17, true), kr: dv.getUint16(o + 19, true), klc: u8[o + 21], krc: u8[o + 22], lc: u8[o + 23],
+        cache: new Map(),
+      };
+      let p = dv.getUint32(o + 24, true);
+      s.iv = new Uint32Array(s.ic * 3);
+      for (let k = 0; k < s.ic * 3; k++) s.iv[k] = dv.getUint32(p + 4 * k, true);
+      p += 12 * s.ic;
+      s.glyphBase = p;
+      p += 16 * s.gc;
+      const classes = n => {
+        const cps = new Uint16Array(n), ids = new Uint8Array(n);
+        for (let k = 0; k < n; k++) { cps[k] = dv.getUint16(p + 3 * k, true); ids[k] = u8[p + 3 * k + 2]; }
+        p += 3 * n;
+        return {cps, ids};
+      };
+      s.kernL = classes(s.kl);
+      s.kernR = classes(s.kr);
+      s.matrix = new Int8Array(buf, p, s.klc * s.krc);
+      p += s.klc * s.krc;
+      s.ligPairs = new Uint32Array(s.lc);
+      s.ligCps = new Uint32Array(s.lc);
+      for (let k = 0; k < s.lc; k++) { s.ligPairs[k] = dv.getUint32(p + 8 * k, true); s.ligCps[k] = dv.getUint32(p + 8 * k + 4, true); }
+      p += 8 * s.lc;
+      s.bitmapBase = p;
+      this.styles[u8[o]] = s;
+    }
+  }
+  // Closest present style (all reader fonts here ship four; the status-bar font only regular).
+  resolve(style) {
+    if (this.styles[style]) return style;
+    if (style === 3 && this.styles[1]) return 1;
+    if (style === 3 && this.styles[2]) return 2;
+    return this.styles[0] ? 0 : this.styles.findIndex(Boolean);
+  }
+  get ascender() { return this.styles[this.resolve(0)].ascender; }
+  get advanceY() { return this.styles[this.resolve(0)].advanceY; }
+  index(s, cp) {
+    const iv = s.iv;
+    let lo = 0, hi = s.ic;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (iv[m * 3] <= cp) lo = m + 1; else hi = m; }
+    if (lo === 0) return -1;
+    const k = (lo - 1) * 3;
+    return cp <= iv[k + 1] ? iv[k + 2] + (cp - iv[k]) : -1;
+  }
+  glyphAt(s, i) {
+    const o = s.glyphBase + 16 * i, dv = this.dv;
+    return {w: this.u8[o], h: this.u8[o + 1], adv: dv.getUint16(o + 2, true), left: dv.getInt16(o + 4, true),
+            top: dv.getInt16(o + 6, true), off: s.bitmapBase + dv.getUint32(o + 12, true)};
+  }
+  // EpdFont::getGlyph, including its U+02BB and replacement-glyph fallbacks.
+  glyph(cp, sid, fallback = true) {
+    const s = this.styles[sid];
+    const key = fallback ? cp : -cp - 1;
+    if (s.cache.has(key)) return s.cache.get(key);
+    let i = this.index(s, cp);
+    if (i < 0 && fallback) {
+      if (cp === 0x02BB && this.index(s, 0x2018) >= 0) i = this.index(s, 0x2018);
+      else if (cp !== REPLACEMENT) i = this.index(s, REPLACEMENT);
+    }
+    const g = i >= 0 ? this.glyphAt(s, i) : null;
+    s.cache.set(key, g);
+    return g;
+  }
+  // 4.4 fixed-point kerning from the class tables (EpdFont::getKerning, dense matrix).
+  kern(l, r, sid) {
+    if (l > 0xFFFF || r > 0xFFFF) return 0;
+    const s = this.styles[sid];
+    if (!s.klc || !s.krc) return 0;
+    const lc = classOf(s.kernL, l);
+    if (!lc) return 0;
+    const rc = classOf(s.kernR, r);
+    if (!rc) return 0;
+    return s.matrix[(lc - 1) * s.krc + (rc - 1)];
+  }
+  ligature(l, r, sid) {
+    if (l > 0xFFFF || r > 0xFFFF || isArabicPF(l) || isArabicPF(r)) return 0;
+    const s = this.styles[sid], key = ((l << 16) | r) >>> 0, a = s.ligPairs;
+    let lo = 0, hi = s.lc;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (a[m] < key) lo = m + 1; else hi = m; }
+    return lo < s.lc && a[lo] === key ? s.ligCps[lo] : 0;
+  }
+}
+
+function classOf(t, cp) {
+  let lo = 0, hi = t.cps.length;
+  while (lo < hi) { const m = (lo + hi) >> 1; if (t.cps[m] < cp) lo = m + 1; else hi = m; }
+  return lo < t.cps.length && t.cps[lo] === cp ? t.ids[lo] : 0;
+}
+const isArabicPF = cp => (cp >= 0xFB50 && cp <= 0xFDFF) || (cp >= 0xFE70 && cp <= 0xFEFF);
+
+// ---------------------------------------------------------------------------
+// Measurement and drawing (lib/GfxRenderer/GfxRenderer.cpp)
+// ---------------------------------------------------------------------------
+const toPx = fp => (fp + 8) >> 4;  // fp4::toPixel
+const isSpaceCp = cp => cp === 0x20 || cp === 0xA0 || cp === 0x3000;
+const trackingBetween = (l, r, t) => (!l || isSpaceCp(l) || isSpaceCp(r)) ? 0 : t;
+const isCombining = cp => (cp >= 0x300 && cp <= 0x36F) || (cp >= 0x1DC0 && cp <= 0x1DFF) ||
+  (cp >= 0x20D0 && cp <= 0x20FF) || (cp >= 0xFE20 && cp <= 0xFE2F);
+const codepoints = text => Array.from(text, c => c.codePointAt(0));
+
+function applyLigatures(font, cps, i, sid) {
+  let cp = cps[i];
+  while (i + 1 < cps.length) {
+    const lig = font.ligature(cp, cps[i + 1], sid);
+    if (!lig) break;
+    cp = lig;
+    i++;
+  }
+  return [cp, i];
+}
+
+// getTextAdvanceX in layout mode. SD-card fonts measure with the advance table only (no kerning
+// or ligatures); built-in fonts snap each advance + kern pair together.
+function measure(font, text, style, tracking) {
+  const sid = font.resolve(style), cps = codepoints(text);
+  if (!font.builtin) {
+    let fp = 0, tr = 0, prev = 0;
+    for (const cp of cps) {
+      const g = font.glyph(cp, sid);
+      if (!isCombining(cp)) { tr += trackingBetween(prev, cp, tracking); prev = cp; }
+      fp += g ? g.adv : 0;
+    }
+    return toPx(fp) + tr;
+  }
+  let px = 0, prev = 0, prevAdv = 0;
+  for (let i = 0; i < cps.length; i++) {
+    let cp = cps[i];
+    if (isCombining(cp)) continue;
+    [cp, i] = applyLigatures(font, cps, i, sid);
+    if (prev) px += toPx(prevAdv + font.kern(prev, cp, sid)) + trackingBetween(prev, cp, tracking);
+    const g = font.glyph(cp, sid);
+    prevAdv = g ? g.adv : 0;
+    prev = cp;
+  }
+  return px + toPx(prevAdv);
+}
+
+const spaceWidth = (font, style) => { const g = font.glyph(0x20, font.resolve(style), false); return g ? toPx(g.adv) : 0; };
+
+function spaceAdvance(font, l, r, style) {
+  const sid = font.resolve(style), g = font.glyph(0x20, sid, false), adv = g ? g.adv : 0;
+  if (!font.builtin) return toPx(adv);
+  return toPx(adv + font.kern(l, 0x20, sid) + font.kern(0x20, r, sid));
+}
+
+const kernPx = (font, l, r, style, tracking) => toPx(font.kern(l, r, font.resolve(style))) + trackingBetween(l, r, tracking);
+
+// Framebuffer cell bits: 1 = black in the BW pass, 2 = grey MSB plane, 4 = grey LSB plane.
+function blit(fb, font, g, x0, y0) {
+  const u8 = font.u8, n = g.w * g.h;
+  for (let i = 0; i < n; i++) {
+    const v = (u8[g.off + (i >> 2)] >> ((3 - (i & 3)) * 2)) & 3;
+    if (!v) continue;
+    const x = x0 + i % g.w, y = y0 + ((i / g.w) | 0);
+    if (x < 0 || y < 0 || x >= W || y >= H) continue;
+    fb[y * W + x] |= v === 3 ? 1 : v === 2 ? 7 : 3;
+  }
+}
+
+function drawText(fb, font, x, y, text, style, tracking) {
+  const sid = font.resolve(style), baseline = y + font.ascender, cps = codepoints(text);
+  let baseX = x, baseLeft = 0, baseW = 0, baseTop = 0, prevAdv = 0, prev = 0;
+  for (let i = 0; i < cps.length; i++) {
+    let cp = cps[i];
+    if (isCombining(cp)) {
+      // Centered over the base glyph and lifted clear of it (combiningMark::CenterRaised).
+      const g = font.glyph(cp, sid, false);
+      if (!g) continue;
+      const gap = g.top - g.h - baseTop;
+      const raise = g.top - g.h > 0 && gap < 1 ? 1 - gap : 0;
+      blit(fb, font, g, baseX + baseLeft + Math.trunc(baseW / 2) - Math.trunc(g.w / 2), baseline - raise - g.top);
+      continue;
+    }
+    [cp, i] = applyLigatures(font, cps, i, sid);
+    if (prev) baseX += toPx(prevAdv + font.kern(prev, cp, sid)) + trackingBetween(prev, cp, tracking);
+    const g = font.glyph(cp, sid);
+    baseLeft = g ? g.left : 0;
+    baseW = g ? g.w : 0;
+    baseTop = g ? g.top : 0;
+    prevAdv = g ? g.adv : 0;
+    if (g && g.w && g.h) blit(fb, font, g, baseX + g.left, baseline - g.top);
+    prev = cp;
+  }
+}
+
+function fillRect(fb, x, y, w, h) {
+  for (let yy = y; yy < y + h; yy++) for (let xx = x; xx < x + w; xx++) fb[yy * W + xx] |= 1;
+}
+const hLine = (fb, x1, x2, y) => fillRect(fb, x1, y, x2 - x1 + 1, 1);
+const vLine = (fb, x, y1, y2) => fillRect(fb, x, y1, 1, y2 - y1 + 1);
+
+// ---------------------------------------------------------------------------
+// Text layout (lib/Epub/Epub/ParsedText.cpp, LTR, hyphenation off)
+// ---------------------------------------------------------------------------
+const EXPLICIT_HYPHENS = new Set([0x2D, 0x58A, 0x2010, 0x2012, 0x2013, 0x2014, 0x2015, 0x2043, 0x207B, 0x208B,
+  0x2212, 0x2E17, 0x2E3A, 0x2E3B, 0xFE58, 0xFE63, 0xFF0D]);
+const breaksAfter = cp => EXPLICIT_HYPHENS.has(cp);  // excludes U+00AD and U+2011
+const stripShy = t => t.replace(/\u00AD/g, '');
+const firstCp = t => stripShy(t).codePointAt(0) || 0;
+const lastCp = t => { const c = codepoints(t); return c[c.length - 1]; };
+
+// "*italic*", "**bold**", "***bold italic***" -> styled runs
+function parseRuns(line) {
+  const runs = [];
+  let bold = false, italic = false, buf = '';
+  const flush = () => { if (buf) runs.push({text: buf, style: (bold ? 1 : 0) | (italic ? 2 : 0)}); buf = ''; };
+  for (let i = 0; i < line.length;) {
+    if (line[i] === '\\' && line[i + 1] === '*') { buf += '*'; i += 2; continue; }
+    if (line[i] === '*') {
+      let n = 0;
+      while (line[i + n] === '*') n++;
+      flush();
+      if (n >= 3) { bold = !bold; italic = !italic; } else if (n === 2) bold = !bold; else italic = !italic;
+      i += n;
+      continue;
+    }
+    buf += line[i++];
+  }
+  flush();
+  return runs;
+}
+
+// ParsedText::addWord: NFC, breaks allowed after explicit hyphens/dashes. Soft hyphens stay in the
+// word (they mark split points) but are never measured or drawn.
+function addWord(toks, word, style, attach) {
+  word = word.normalize('NFC');
+  if (!word) return;
+  let cont = attach, nsb = false;
+  if (attach && toks.length && breaksAfter(lastCp(toks[toks.length - 1].text))) nsb = true;
+  const offsets = [];
+  let lead = cont, pos = 0;
+  const cps = codepoints(word);
+  for (let k = 0; k < cps.length;) {
+    const cp = cps[k];
+    pos += cp > 0xFFFF ? 2 : 1;
+    k++;
+    if (breaksAfter(cp)) {
+      while (k < cps.length && breaksAfter(cps[k])) { pos += cps[k] > 0xFFFF ? 2 : 1; k++; }
+      if (lead && k < cps.length) offsets.push(pos);
+    }
+    lead = true;
+  }
+  let start = 0, first = true;
+  const push = end => {
+    toks.push({text: word.slice(start, end), style, cont: first ? cont : true, nsb: first ? nsb : true});
+    first = false;
+    start = end;
+  };
+  for (const o of offsets) if (o > start) push(o);
+  if (start < word.length) push(word.length);
+}
+
+function tokenize(line) {
+  const toks = [];
+  let attach = false;
+  for (const run of parseRuns(line)) {
+    for (const part of run.text.split(/([ \t\r]+)/)) {
+      if (!part) continue;
+      if (/^[ \t\r]+$/.test(part)) { attach = false; continue; }
+      addWord(toks, part, run.style, attach && toks.length > 0);
+      attach = true;
+    }
+  }
+  return toks;
+}
+
+// Hyphenator::breakOffsets(word, includeFallback) with no language patterns (plain text has no
+// book language): breaks after inner hyphens and apostrophes, else any position 2 from each end.
+const PUNCT = new Set([0x2D, 0x2E, 0x2C, 0x21, 0x3F, 0x3B, 0x3A, 0x22, 0x27, 0x29, 0x28, 0xAB, 0xBB, 0x2018, 0x2019,
+  0x201A, 0x201C, 0x201D, 0x201E, 0xA0, 0x7B, 0x7D, 0x5B, 0x5D, 0x2F, 0x2039, 0x203A, 0x2026]);
+const isApostrophe = cp => cp === 0x27 || cp === 0x2018 || cp === 0x2019;
+const isAlpha = cp => (cp >= 0x41 && cp <= 0x5A) || (cp >= 0x61 && cp <= 0x7A) || (cp >= 0xC0 && cp <= 0x17F && cp !== 0xD7 && cp !== 0xF7) ||
+  cp === 0x1E9E || (cp >= 0x400 && cp <= 0x52F);
+const isHyphenMark = cp => breaksAfter(cp) || cp === 0xAD || cp === 0x2011;
+
+function fallbackBreaks(word) {
+  let cps = [], off = 0;
+  for (const ch of word) { cps.push({v: ch.codePointAt(0), o: off}); off += ch.length; }
+  const isDigit = v => v >= 0x30 && v <= 0x39;
+  if (cps.length >= 3) {  // drop a trailing footnote marker such as [12]
+    let end = cps.length - 1;
+    while (end >= 0 && PUNCT.has(cps[end].v)) end--;
+    let pos = end;
+    if (pos >= 0 && isDigit(cps[pos].v)) {
+      while (pos >= 0 && isDigit(cps[pos].v)) pos--;
+      if (pos >= 0 && cps[pos].v === 0x5B && end - pos > 1) cps = cps.slice(0, pos);
+    }
+  }
+  while (cps.length && PUNCT.has(cps[0].v)) cps.shift();
+  while (cps.length && PUNCT.has(cps[cps.length - 1].v)) cps.pop();
+  const tidy = list => list.sort((a, b) => a.o - b.o || a.hy - b.hy).filter((b, i, l) => !i || b.o !== l[i - 1].o);
+  const apostrophes = () => {
+    const out = [];
+    let segStart = 0;
+    const sep = v => isHyphenMark(v) || isApostrophe(v);
+    cps.forEach((c, i) => {
+      if (!sep(c.v)) return;
+      if (isApostrophe(c.v) && i > 0 && i + 1 < cps.length && isAlpha(cps[i - 1].v) && isAlpha(cps[i + 1].v)) {
+        const left = cps.slice(segStart, i).filter(x => isAlpha(x.v)).length;
+        let right = 0;
+        for (let j = i + 1; j < cps.length && !sep(cps[j].v); j++) if (isAlpha(cps[j].v)) right++;
+        if (left >= 3 && right >= 3) out.push({o: cps[i + 1].o, hy: false});
+      }
+      segStart = i + 1;
+    });
+    return out;
+  };
+  const explicit = [];
+  for (let i = 1; i + 1 < cps.length; i++) {
+    if (isHyphenMark(cps[i].v) && isAlpha(cps[i - 1].v) && isAlpha(cps[i + 1].v)) explicit.push({o: cps[i + 1].o, hy: cps[i].v === 0xAD});
+  }
+  const hasApostrophe = cps.some(c => isApostrophe(c.v));
+  if (explicit.length) return tidy(hasApostrophe ? explicit.concat(apostrophes()) : explicit);
+  if (hasApostrophe) return tidy(apostrophes());
+  const out = [];
+  for (let i = 2; i + 2 <= cps.length; i++) out.push({o: cps[i].o, hy: true});
+  return out;
+}
+
+// ParsedText::hyphenateWordAtIndex: split a word wider than the line at the widest prefix that fits.
+function splitOversized(font, toks, widths, i, avail, cs) {
+  const {text, style} = toks[i];
+  let at = -1, best = -1, hy = true;
+  for (const b of fallbackBreaks(text)) {
+    if (b.o === 0 || b.o >= text.length) continue;
+    const w = measure(font, stripShy(text.slice(0, b.o)) + (b.hy ? '-' : ''), style, cs);
+    if (w > avail || w <= best) continue;
+    best = w;
+    at = b.o;
+    hy = b.hy;
+  }
+  if (best < 0) return false;
+  const rest = text.slice(at);
+  toks.splice(i, 1, {...toks[i], text: text.slice(0, at) + (hy ? '-' : '')}, {text: rest, style, cont: false, nsb: false});
+  widths.splice(i, 1, best, measure(font, stripShy(rest), style, cs));
+  return true;
+}
+
+function layoutParagraph(font, toks, s, pageWidth) {
+  if (!toks.length) return [];
+  toks = toks.slice();
+  const cs = s.charSpacing;
+  const scaleSpace = adv => s.wordSpacing === 100 ? adv : Math.trunc((adv * s.wordSpacing + 50) / 100);
+  const align = s.align === 'book' ? 'justify' : s.align;
+  const natural = align === 'justify' || align === 'left';
+  const indent = natural && s.indent > 0 ? scaleSpace(spaceWidth(font, 0)) * s.indent : 0;
+  const widths = toks.map(t => measure(font, stripShy(t.text), t.style, cs));
+  const gap = j => toks[j].cont ? kernPx(font, lastCp(toks[j - 1].text), firstCp(toks[j].text), toks[j - 1].style, cs)
+    : toks[j].nsb ? cs
+    : scaleSpace(spaceAdvance(font, lastCp(toks[j - 1].text), firstCp(toks[j].text), toks[j - 1].style));
+  const allowsBreak = j => !toks[j].cont || toks[j].nsb;
+
+  // computeLineBreaks: split words too wide for any line, then a minimum-raggedness dynamic
+  // program (squared slack, last line free).
+  for (let i = 0; i < widths.length; i++) {
+    const avail = i === 0 ? pageWidth - indent : pageWidth;
+    while (widths[i] > avail && splitOversized(font, toks, widths, i, avail, cs)) { /* keep splitting */ }
+  }
+  const n = toks.length, MAX = 2147483647, dp = new Array(n), ans = new Array(n);
+  dp[n - 1] = 0;
+  ans[n - 1] = n - 1;
+  for (let i = n - 2; i >= 0; i--) {
+    let len = 0;
+    dp[i] = MAX;
+    const eff = i === 0 ? pageWidth - indent : pageWidth;
+    for (let j = i; j < n; j++) {
+      len += widths[j] + (j > i ? gap(j) : 0);
+      if (len > eff) break;
+      if (j + 1 < n && !allowsBreak(j + 1)) continue;
+      const cost = j === n - 1 ? 0 : Math.min(MAX, (eff - len) * (eff - len) + dp[j + 1]);
+      if (cost <= dp[i]) { dp[i] = cost; ans[i] = j; }
+    }
+    if (dp[i] === MAX) { ans[i] = i; dp[i] = i + 1 < n ? dp[i + 1] : 0; }
+  }
+  const breaks = [];
+  for (let cur = 0; cur < n;) { const next = Math.max(ans[cur] + 1, cur + 1); breaks.push(next); cur = next; }
+
+  // extractLine: word positions, justification spread evenly over real word gaps.
+  const lines = [];
+  let a = 0;
+  breaks.forEach((b, li) => {
+    const first = li === 0, last = li === breaks.length - 1;
+    const effIndent = first ? indent : 0, eff = pageWidth - effIndent;
+    let sum = 0, gaps = 0, natGaps = 0;
+    for (let k = a; k < b; k++) {
+      sum += widths[k];
+      if (k === a) continue;
+      if (!toks[k].cont) gaps++;
+      natGaps += gap(k);
+    }
+    const spare = eff - sum - natGaps;
+    const extra = align === 'justify' && !last && gaps >= 1 && spare > 0 ? Math.trunc(spare / gaps) : 0;
+    let x = effIndent;
+    if (align === 'right') x = eff - sum - natGaps;
+    else if (align === 'center') x = Math.trunc((eff - sum - natGaps) / 2);
+    const words = [];
+    for (let k = a; k < b; k++) {
+      words.push({text: stripShy(toks[k].text), style: toks[k].style, x});
+      if (k + 1 < b && toks[k + 1].cont) {
+        x += widths[k] + gap(k + 1);
+      } else {
+        let g = k + 1 < b ? gap(k + 1) : 0;
+        if (k + 1 < b && align === 'justify' && !last) g += extra;
+        x += widths[k] + g;
+      }
+    }
+    lines.push(words);
+    a = b;
+  });
+  return lines;
+}
+
+// Page geometry for the X4 in portrait (EpubReaderActivity viewport).
+function geometry(s) {
+  const top = INSET.top + s.margin, left = INSET.left + s.margin, right = INSET.right + s.margin;
+  const bottom = INSET.bottom + Math.max(s.margin, STATUS_BAR_H);
+  return {top, left, width: W - left - right, height: H - top - bottom};
+}
+
+const lineHeightFor = (font, s) => {
+  const m = Math.fround(LINE_MULT[font.builtin ? 'builtin' : 'sd'][s.lineSpacing]);
+  return Math.trunc(Math.fround(Math.fround(font.advanceY * m) + 0.5));
+};
+
+// ChapterHtmlSlimParser: fill pages line by line, never leave a paragraph's first line alone
+// at a page bottom or its last line alone at a page top.
+function paginate(font, paragraphs, s) {
+  const geo = geometry(s), lineH = lineHeightFor(font, s);
+  const pages = [];
+  let page = [], y = 0;
+  for (const toks of paragraphs) {
+    const lines = layoutParagraph(font, toks, s, geo.width);
+    let onPage = 0;
+    lines.forEach((words, i) => {
+      if (y + lineH > geo.height) {
+        let carry = 0;
+        if (onPage === 1) carry = 1;
+        else if (onPage >= 2 && i === lines.length - 1) carry = onPage >= 3 ? 1 : 2;
+        if (carry && !(carry <= Math.min(page.length, MAX_CARRIED_LINES) && page.length > carry)) carry = 0;
+        const moved = page.splice(page.length - carry, carry);
+        pages.push(page);
+        page = [];
+        if (moved.length) {
+          const top = moved[0].y;
+          for (const l of moved) { l.y -= top; page.push(l); }
+          y -= top;
+        } else {
+          y = 0;
+        }
+        onPage = carry;
+      }
+      page.push({y, words});
+      y += lineH;
+      onPage++;
+    });
+    if (s.paraSpacing && lines.length) y += Math.trunc(lineH / 2);
+  }
+  if (page.length || !pages.length) pages.push(page);
+  return {pages, geo};
+}
+
+// BaseTheme::drawStatusBar with Lyra's battery: battery + percentage, centered title, page count.
+function drawStatusBar(fb, small, page, count, title) {
+  const textY = H - STATUS_BAR_H - INSET.bottom - 4;
+  const leftX = SB_HMARGIN + INSET.left + 1, rightX = W - SB_HMARGIN - INSET.right;
+  const progress = `${page}/${count}  ${Math.round(page / count * 100)}%`;
+  const progressW = measure(small, progress, 0, 0);
+  drawText(fb, small, rightX - progressW, textY, progress, 0, 0);
+
+  const bx = leftX, by = textY + 6, bw = BATTERY.w, bh = BATTERY.h;
+  hLine(fb, bx + 1, bx + bw - 3, by);
+  hLine(fb, bx + 1, bx + bw - 3, by + bh - 1);
+  vLine(fb, bx, by + 1, by + bh - 2);
+  vLine(fb, bx + bw - 2, by + 1, by + bh - 2);
+  fillRect(fb, bx + bw - 1, by + 3, 1, 1);
+  fillRect(fb, bx + bw - 1, by + bh - 4, 1, 1);
+  vLine(fb, bx + bw, by + 4, by + bh - 5);
+  for (const dx of [2, 6, 10]) fillRect(fb, bx + dx, by + 2, 3, bh - 4);
+  drawText(fb, small, leftX + BATTERY.gap + bw, textY, '100%', 0, 0);
+  const leftW = bw + BATTERY.gap + measure(small, '100%', 0, 0);
+
+  const usable = W - SB_HMARGIN * 2 - INSET.left - INSET.right;
+  const ml = leftW + 30, mr = progressW + 30, titleW = measure(small, title, 0, 0);
+  let adj = Math.max(ml, mr), avail = usable - 2 * adj;
+  if (titleW > avail) { avail = usable - ml - mr; adj = ml; }
+  if (titleW <= avail) drawText(fb, small, adj + SB_HMARGIN + INSET.left + Math.trunc((avail - titleW) / 2), textY, title, 0, 0);
+}
+
+function renderPage(fb, font, small, doc, pageIdx, s, title) {
+  fb.fill(0);
+  for (const line of doc.pages[pageIdx]) {
+    for (const w of line.words) drawText(fb, font, doc.geo.left + w.x, doc.geo.top + line.y, w.text, w.style, s.charSpacing);
+  }
+  drawStatusBar(fb, small, pageIdx + 1, doc.pages.length, title);
+}
+
+function paint(canvas, fb, aa) {
+  const ctx = canvas.getContext('2d'), img = ctx.createImageData(W, H), d = img.data;
+  for (let i = 0; i < W * H; i++) {
+    const f = fb[i];
+    const level = !(f & 1) ? 0 : !aa ? 3 : f & 4 ? 2 : f & 2 ? 1 : 3;
+    const c = PALETTE[level];
+    d[i * 4] = c[0]; d[i * 4 + 1] = c[1]; d[i * 4 + 2] = c[2]; d[i * 4 + 3] = 255;
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+// ---------------------------------------------------------------------------
+// Font loading
+// ---------------------------------------------------------------------------
+const fontCache = new Map();
+function loadFont(path, builtin) {
+  if (!fontCache.has(path)) {
+    const p = fetch(path).then(r => {
+      if (!r.ok) throw new Error(`${path}: HTTP ${r.status}`);
+      return r.arrayBuffer();
+    }).then(async buf => {
+      const b = new Uint8Array(buf);
+      if (b[0] === 0x1F && b[1] === 0x8B) {  // gzip (unless the server already decoded it)
+        buf = await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+      }
+      return new CpFont(buf, builtin);
+    });
+    p.catch(() => fontCache.delete(path));
+    fontCache.set(path, p);
+  }
+  return fontCache.get(path);
+}
+
+// ---------------------------------------------------------------------------
+// Page state and UI
+// ---------------------------------------------------------------------------
+const $ = id => document.getElementById(id);
+const el = (tag, attrs = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') e.className = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else if (v === true) e.setAttribute(k, '');
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  for (const kid of kids.flat()) if (kid != null) e.append(kid);
+  return e;
+};
+const kb = bytes => bytes >= 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : `${Math.round(bytes / 1024).toLocaleString()} KB`;
+
+const state = {
+  catalog: null,
+  settings: {...DEFAULTS},
+  screens: [{family: 'NotoSans', size: 14, page: 0}, {family: 'Literata', size: 14, page: 0}],
+  active: 0,
+  compare: false,
+  zoom: 'fit',
+  category: 'All',
+  script: '',
+  preset: 0,
+  title: PRESETS[0].title,
+};
+let smallFont = null;
+const views = [];
+
+const family = name => state.catalog.families.find(f => f.name === name);
+const nearestSize = (fam, size) => fam.sizes.reduce((best, s) => Math.abs(s.size - size) < Math.abs(best.size - size) ? s : best).size;
+
+function paragraphs() {
+  return $('sample').value.split('\n').map(l => l.trim()).filter(Boolean).map(tokenize);
+}
+
+async function renderScreen(i) {
+  const v = views[i], scr = state.screens[i], fam = family(scr.family);
+  const info = fam.sizes.find(s => s.size === scr.size);
+  const token = (v.token = (v.token || 0) + 1);
+  v.loading.hidden = false;
+  v.loading.textContent = `Loading ${fam.name} ${scr.size} pt (${kb(info.gzBytes)})…`;
+  try {
+    const font = await loadFont(info.path, fam.builtin);
+    if (token !== v.token) return;
+    const doc = paginate(font, paragraphs(), state.settings);
+    scr.page = Math.min(scr.page, doc.pages.length - 1);
+    const fb = new Uint8Array(W * H);
+    renderPage(fb, font, smallFont, doc, scr.page, state.settings, state.title);
+    paint(v.canvas, fb, state.settings.aa);
+    v.loading.hidden = true;
+    v.pageLabel.textContent = `Page ${scr.page + 1} of ${doc.pages.length}`;
+    v.prev.disabled = scr.page === 0;
+    v.next.disabled = scr.page >= doc.pages.length - 1;
+    v.canvas.setAttribute('aria-label', `${fam.name} ${scr.size} pt on an Xteink X4 screen, page ${scr.page + 1} of ${doc.pages.length}`);
+  } catch (err) {
+    if (token !== v.token) return;
+    v.loading.textContent = location.protocol === 'file:'
+      ? 'Font files can’t load from a local file. Open this page through a web server, such as GitHub Pages.'
+      : `Couldn’t load this font (${err.message}).`;
+  }
+}
+
+function renderAll() {
+  views.forEach((v, i) => { if (i === 0 || state.compare) renderScreen(i); });
+}
+
+function buildScreens() {
+  const wrap = $('screens');
+  wrap.textContent = '';
+  views.length = 0;
+  const count = state.compare ? 2 : 1;
+  wrap.classList.toggle('compare', state.compare);
+  for (let i = 0; i < count; i++) {
+    const familySel = el('select', {'aria-label': `Font for screen ${'AB'[i]}`, onchange: e => setFamily(i, e.target.value)});
+    for (const cat of categoryOrder()) {
+      const og = el('optgroup', {label: cat});
+      for (const f of state.catalog.families.filter(f => f.category === cat)) og.append(el('option', {value: f.name}, f.name));
+      familySel.append(og);
+    }
+    const sizeSel = el('select', {class: 'size', 'aria-label': `Font size for screen ${'AB'[i]}`, onchange: e => {
+      state.screens[i].size = +e.target.value;
+      saveHash();
+      renderScreen(i);
+      renderInfo();
+    }});
+    const canvas = el('canvas', {width: W, height: H, role: 'img'});
+    const loading = el('div', {class: 'loading', hidden: true});
+    const prev = el('button', {type: 'button', 'aria-label': 'Previous page', onclick: () => turn(i, -1)}, '‹');
+    const next = el('button', {type: 'button', 'aria-label': 'Next page', onclick: () => turn(i, 1)}, '›');
+    const pageLabel = el('span', {'aria-live': 'polite'});
+    const card = el('div', {class: 'screen-card', onpointerdown: () => setActive(i)},
+      el('div', {class: 'screen-head'}, state.compare ? el('span', {class: `badge b-${'ab'[i]}`}, 'AB'[i]) : null, familySel, sizeSel),
+      el('div', {class: 'device'}, canvas, loading),
+      el('div', {class: 'pager'}, prev, pageLabel, next));
+    card.addEventListener('focusin', () => setActive(i));
+    wrap.append(card);
+    views.push({card, familySel, sizeSel, canvas, loading, prev, next, pageLabel});
+    syncScreenControls(i);
+  }
+  setActive(state.compare ? state.active : 0, true);
+  applyZoom();
+}
+
+function syncScreenControls(i) {
+  const v = views[i], scr = state.screens[i], fam = family(scr.family);
+  if (!v) return;
+  v.familySel.value = scr.family;
+  v.sizeSel.textContent = '';
+  for (const s of fam.sizes) v.sizeSel.append(el('option', {value: s.size}, `${s.size} pt`));
+  v.sizeSel.value = scr.size;
+}
+
+function setActive(i, quiet) {
+  if (!state.compare) i = 0;
+  if (state.active === i && !quiet) return;
+  state.active = i;
+  views.forEach((v, k) => v.card.classList.toggle('active', k === i));
+  renderList();
+  renderInfo();
+}
+
+function setFamily(i, name) {
+  const scr = state.screens[i], fam = family(name);
+  scr.family = name;
+  scr.size = nearestSize(fam, scr.size);  // the reader snaps to the nearest size the family ships
+  scr.page = 0;
+  syncScreenControls(i);
+  saveHash();
+  renderList();
+  renderInfo();
+  renderScreen(i);
+}
+
+function turn(i, delta) {
+  state.screens[i].page = Math.max(0, state.screens[i].page + delta);
+  renderScreen(i);
+}
+
+function applyZoom() {
+  const wrap = $('screens');
+  let z = +state.zoom;
+  if (state.zoom === 'fit') {
+    const n = state.compare && wrap.clientWidth >= 560 ? 2 : 1;
+    // Card width is 598z + 21 px (device face, its border, card padding and border).
+    const avail = (wrap.clientWidth - 16 * (n - 1)) / n - 22;
+    z = Math.max(0.25, Math.min(1, avail / 598, (window.innerHeight - 200) / 990));
+  }
+  wrap.style.setProperty('--z', z.toFixed(4));
+  wrap.classList.toggle('crisp', z >= 1);
+  document.querySelectorAll('[data-zoom]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.zoom === state.zoom)));
+}
+
+function categoryOrder() {
+  const order = ['Built in', 'Serif', 'Sans-serif', 'Monospace', 'Dyslexia', 'Accessibility'];
+  const cats = [...new Set(state.catalog.families.map(f => f.category))];
+  return cats.sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99);
+}
+
+function renderFilters() {
+  const chips = $('catChips');
+  chips.textContent = '';
+  for (const cat of ['All', ...categoryOrder()]) {
+    chips.append(el('button', {type: 'button', class: 'chip', 'aria-pressed': String(state.category === cat),
+      onclick: () => { state.category = cat; renderFilters(); renderList(); }}, cat));
+  }
+}
+
+function renderList() {
+  const list = $('fontList'), labels = state.catalog.scriptLabels;
+  list.textContent = '';
+  const fams = state.catalog.families.filter(f =>
+    (state.category === 'All' || f.category === state.category) && (!state.script || f.scripts.includes(state.script)));
+  for (const cat of categoryOrder()) {
+    for (const f of fams.filter(f => f.category === cat)) {
+      const using = state.screens.map((s, k) => s.family === f.name && (k === 0 || state.compare) ? 'AB'[k] : null).filter(Boolean);
+      const size = f.builtin ? 'In firmware' : `${f.sizes.length} sizes, ${kb(f.sizes.reduce((t, s) => t + s.bytes, 0))}`;
+      list.append(el('li', {}, el('button', {type: 'button', class: 'font-item',
+        'aria-current': String(state.screens[state.active].family === f.name),
+        onclick: () => setFamily(state.active, f.name)},
+        el('span', {class: 'fi-name'}, f.name, f.builtin ? el('span', {class: 'badge b-builtin'}, 'Built in') : null,
+          state.compare ? using.map(u => el('span', {class: `badge b-${u.toLowerCase()}`}, u)) : null),
+        el('span', {class: 'fi-desc'}, f.description),
+        el('span', {class: 'fi-meta'}, `${f.category} · ${f.scripts.map(s => labels[s] || s).join(', ')} · ${size}`))));
+    }
+  }
+  if (!list.children.length) list.append(el('li', {class: 'empty'}, 'No fonts match these filters.'));
+}
+
+function sourceLink(url) {
+  if (!url) return null;
+  const m = url.match(/^https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\//);
+  return m ? `https://github.com/${m[1]}/${m[2]}` : url;
+}
+
+function renderInfo() {
+  const box = $('info'), cat = state.catalog, scr = state.screens[state.active], f = family(scr.family);
+  const labels = cat.scriptLabels;
+  box.textContent = '';
+  box.append(el('h2', {}, f.name, f.builtin ? el('span', {class: 'badge b-builtin'}, 'Built in') : null,
+    state.compare ? el('span', {class: `badge b-${'ab'[state.active]}`}, `Screen ${'AB'[state.active]}`) : null));
+  box.append(el('p', {}, f.description));
+  box.append(el('dl', {},
+    el('dt', {}, 'Category'), el('dd', {}, f.category),
+    el('dt', {}, 'Scripts'), el('dd', {}, f.scripts.map(s => labels[s] || s).join(', ')),
+    el('dt', {}, 'Styles'), el('dd', {}, f.styles.map(s => STYLE_NAMES[['regular', 'bold', 'italic', 'bolditalic'].indexOf(s)] || s).join(', ')),
+    el('dt', {}, 'Sizes'), el('dd', {}, f.sizes.map(s => `${s.size}`).join(', ') + ' pt')));
+  if (f.builtin) {
+    box.append(el('p', {}, 'Built into the firmware, so there’s nothing to download. It’s the default reading font; choose it under ',
+      el('strong', {}, 'Settings → Reader → Reader Font Family'), '.'));
+  } else {
+    const rows = f.sizes.map(s => el('tr', {},
+      el('td', {}, `${s.size} pt`),
+      el('td', {}, el('a', {href: s.url}, s.file)),
+      el('td', {class: 'num'}, kb(s.bytes))));
+    box.append(el('table', {class: 'files'},
+      el('thead', {}, el('tr', {}, el('th', {}, 'Size'), el('th', {}, 'File'), el('th', {class: 'num'}, 'File size'))),
+      el('tbody', {}, rows)));
+    box.append(el('h2', {}, 'Install'));
+    box.append(el('ol', {},
+      el('li', {}, el('strong', {}, 'On the reader: '), 'connect to Wi-Fi, open ', el('strong', {}, 'Settings → Reader → Manage Fonts'), ` and download ${f.name}.`),
+      el('li', {}, el('strong', {}, 'From a browser: '), 'start ', el('strong', {}, 'File Transfer'), ', open the address the reader shows, and upload the .cpfont files on the ', el('strong', {}, 'Fonts'), ' tab.'),
+      el('li', {}, el('strong', {}, 'By SD card: '), 'copy the files into ', el('code', {}, `/.fonts/${f.name}/`), ' (or ', el('code', {}, `/fonts/${f.name}/`), ').')));
+    box.append(el('p', {}, 'Then pick it under ', el('strong', {}, 'Settings → Reader → Reader Font Family'), '.'));
+  }
+  const src = sourceLink(f.source);
+  box.append(el('p', {class: 'hint'},
+    src ? el('a', {href: src}, 'Original font source') : null, src ? ' · ' : null,
+    el('a', {href: cat.releaseUrl}, `crosspoint-fonts ${cat.release}`), ' · ',
+    el('a', {href: `https://github.com/crosspoint-reader/crosspoint-reader/tree/${cat.firmware}`}, `CrossPoint ${cat.firmware}`)));
+}
+
+function bindSettings() {
+  const ws = $('s-wordSpacing');
+  for (let p = 50; p <= 200; p += 25) ws.append(el('option', {value: p}, `${p}%`));
+  const controls = {lineSpacing: 'number', align: 'string', margin: 'number', indent: 'number', wordSpacing: 'number',
+    charSpacing: 'number', paraSpacing: 'bool', aa: 'bool'};
+  const sync = () => {
+    for (const [k, type] of Object.entries(controls)) {
+      const c = $(`s-${k}`);
+      if (type === 'bool') c.checked = state.settings[k]; else c.value = state.settings[k];
+    }
+    $('o-margin').textContent = `${state.settings.margin} px`;
+  };
+  for (const [k, type] of Object.entries(controls)) {
+    $(`s-${k}`).addEventListener('input', e => {
+      const c = e.target;
+      state.settings[k] = type === 'bool' ? c.checked : type === 'number' ? +c.value : c.value;
+      $('o-margin').textContent = `${state.settings.margin} px`;
+      renderAll();
+    });
+  }
+  $('resetSettings').addEventListener('click', () => { state.settings = {...DEFAULTS}; sync(); renderAll(); });
+  sync();
+}
+
+function bindText() {
+  const preset = $('preset'), sample = $('sample');
+  PRESETS.forEach((p, i) => preset.append(el('option', {value: i}, p.name)));
+  const load = i => { state.preset = i; state.title = PRESETS[i].title; sample.value = PRESETS[i].text.join('\n'); };
+  preset.addEventListener('change', () => { load(+preset.value); state.screens.forEach(s => { s.page = 0; }); renderAll(); });
+  let timer = 0;
+  sample.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(renderAll, 150); });
+  load(0);
+}
+
+function saveHash() {
+  const [a, b] = state.screens;
+  const parts = [`a=${a.family}-${a.size}`];
+  if (state.compare) parts.push(`b=${b.family}-${b.size}`);
+  history.replaceState(null, '', `#${parts.join('&')}`);
+}
+
+function loadHash() {
+  const params = new URLSearchParams(location.hash.slice(1));
+  ['a', 'b'].forEach((key, i) => {
+    const m = (params.get(key) || '').match(/^(\w+)-(\d+)$/);
+    const fam = m && family(m[1]);
+    if (fam) { state.screens[i].family = fam.name; state.screens[i].size = nearestSize(fam, +m[2]); }
+  });
+  if (params.has('b')) state.compare = true;
+}
+
+async function init() {
+  try {
+    const res = await fetch('fonts/catalog.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    state.catalog = await res.json();
+    smallFont = await loadFont('fonts/ui/Small_8.cpfont.gz', true);
+  } catch (err) {
+    $('fatal').append(el('p', {class: 'error'}, location.protocol === 'file:'
+      ? 'This page loads its font files over the network, which browsers block for local files. Open it through a web server, such as GitHub Pages.'
+      : `The font catalog couldn’t be loaded (${err.message}).`));
+    return;
+  }
+  const sf = $('scriptFilter');
+  const scripts = [...new Set(state.catalog.families.flatMap(f => f.scripts))];
+  for (const s of scripts) sf.append(el('option', {value: s}, state.catalog.scriptLabels[s] || s));
+  sf.addEventListener('change', () => { state.script = sf.value; renderList(); });
+  loadHash();
+  $('compare').checked = state.compare;
+  $('compare').addEventListener('change', e => {
+    state.compare = e.target.checked;
+    if (!state.compare) state.active = 0;
+    saveHash();
+    buildScreens();
+    renderList();
+    renderAll();
+  });
+  document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => { state.zoom = b.dataset.zoom; applyZoom(); }));
+  window.addEventListener('resize', () => { if (state.zoom === 'fit') applyZoom(); });
+  bindSettings();
+  bindText();
+  renderFilters();
+  buildScreens();
+  renderList();
+  renderInfo();
+  renderAll();
+}
+
+init();
+</script>
+</body>
+</html>
